@@ -47,21 +47,16 @@ struct MapViewActionButton: View {
 //        }
 //    }
     
-//    func imageNameForState(_ state: MapViewState) -> String {
-//        switch state {
-//        case .noInput:
-//            return "line.3.horizontal"
-//        case .searchingForLocation,
-//                .locationSelected,
-//                .polylineAdded,
-//                .tripRejected,
-//                .tripAccepted,
-//                .tripRequested,
-//                .tripCancelledByDriver,
-//                .tripCancelledByPassenger:
-//            return "arrow.left"
-//        }
-//    }
+    func imageNameForState(_ state: MapViewState) -> String {
+        switch state {
+        case .noInput:
+            return "line.3.horizontal"
+        case .searchingForLocation,
+                .locationSelected,
+                .polylineAdded:
+            return "arrow.left"
+        }
+    }
 }
 
 struct MapViewActionButton_Previews: PreviewProvider {
