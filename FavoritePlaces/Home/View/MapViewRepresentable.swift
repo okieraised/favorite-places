@@ -62,13 +62,11 @@ extension MapViewRepresentable {
     class MapCoordinator: NSObject, MKMapViewDelegate {
         
         // MARK: - Properties
-        
         let parent: MapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
         var currentRegion: MKCoordinateRegion?
         
         // MARK: - Lifecycle
-        
         init(parent: MapViewRepresentable) {
             self.parent = parent
             super.init()

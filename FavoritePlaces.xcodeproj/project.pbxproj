@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5AA04AC29B5775900980CCD /* LocationSearchVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA04AB29B5775900980CCD /* LocationSearchVIew.swift */; };
 		E5B07E1D29AF8D60009E7193 /* FavoritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E1C29AF8D60009E7193 /* FavoritePlacesApp.swift */; };
 		E5B07E1F29AF8D60009E7193 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E1E29AF8D60009E7193 /* ContentView.swift */; };
 		E5B07E2129AF8D61009E7193 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5B07E2029AF8D61009E7193 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E5AA04AB29B5775900980CCD /* LocationSearchVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchVIew.swift; sourceTree = "<group>"; };
 		E5B07E1929AF8D60009E7193 /* FavoritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavoritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B07E1C29AF8D60009E7193 /* FavoritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesApp.swift; sourceTree = "<group>"; };
 		E5B07E1E29AF8D60009E7193 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				E5B07E4729AF94E9009E7193 /* ViewModel */,
+				E5AA04AB29B5775900980CCD /* LocationSearchVIew.swift */,
 			);
 			path = LocationSearch;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				E5B07E2629AF8D61009E7193 /* Persistence.swift in Sources */,
 				E5B07E1F29AF8D60009E7193 /* ContentView.swift in Sources */,
 				E5B07E5729AF96F0009E7193 /* Color.swift in Sources */,
+				E5AA04AC29B5775900980CCD /* LocationSearchVIew.swift in Sources */,
 				E5B07E5529AF96A6009E7193 /* SavedLocationRowView.swift in Sources */,
 				E5B07E4929AF94FD009E7193 /* LocationSearchViewModel.swift in Sources */,
 				E5B07E4229AF923F009E7193 /* MapViewActionButton.swift in Sources */,
