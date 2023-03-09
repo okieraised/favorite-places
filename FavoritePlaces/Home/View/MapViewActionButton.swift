@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct MapViewActionButton: View {
-//    @Binding var mapState: MapViewState
-//    @Binding var showSideMenu: Bool
-//    @EnvironmentObject var viewModel: HomeViewModel
+    @Binding var mapState: MapViewState
+    @Binding var showSideMenu: Bool
+    @EnvironmentObject var viewModel: HomeViewModel
     
     var body: some View {
         Button {
-//            withAnimation(.spring()) {
-//                actionForState(mapState)
-//            }
+            withAnimation(.spring()) {
+                actionForState(mapState)
+            }
         } label: {
-            Image(systemName: "line.3.horizontal") // imageNameForState("")
+            Image(systemName: imageNameForState(mapState))
                 .font(.title2)
                 .foregroundColor(.black)
                 .padding()
@@ -26,34 +26,33 @@ struct MapViewActionButton: View {
                 .clipShape(Circle())
                 .shadow(color: .black, radius: 6)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .padding(.trailing, 10)
     }
     
-//    func actionForState(_ state: MapViewState) {
-//        switch state {
-//        case .noInput:
-//            showSideMenu.toggle()
-//        case .searchingForLocation:
-//            mapState = .noInput
-//        case .locationSelected,
-//                .polylineAdded,
-//                .tripRejected,
-//                .tripAccepted,
-//                .tripRequested,
-//                .tripCancelledByDriver,
-//                .tripCancelledByPassenger:
-//            mapState = .noInput
-//            viewModel.selectedUberLocation = nil
-//        }
-//    }
+    func actionForState(_ state: MapViewState) {
+        switch state {
+        case .noInput:
+            showSideMenu.toggle()
+            mapState = .sideMenu
+        case .searchingForLocation:
+            mapState = .noInput
+        case .sideMenu:
+            showSideMenu.toggle()
+            mapState = .noInput
+        case .categorySelected:
+            break
+        case .locationSelected, .polylineAdded:
+            mapState = .noInput
+            viewModel.selectedLocation = nil
+        }
+    }
     
     func imageNameForState(_ state: MapViewState) -> String {
         switch state {
-        case .noInput:
+        case .noInput, .categorySelected:
             return "line.3.horizontal"
-        case .searchingForLocation,
-                .locationSelected,
-                .polylineAdded:
+        case .searchingForLocation, .locationSelected, .polylineAdded, .sideMenu:
             return "arrow.left"
         }
     }
@@ -61,7 +60,6 @@ struct MapViewActionButton: View {
 
 struct MapViewActionButton_Previews: PreviewProvider {
     static var previews: some View {
-        MapViewActionButton()
-//        MapViewActionButton(mapState: .constant(.noInput), showSideMenu: .constant(false))
+        MapViewActionButton(mapState: .constant(.noInput), showSideMenu: .constant(false))
     }
 }

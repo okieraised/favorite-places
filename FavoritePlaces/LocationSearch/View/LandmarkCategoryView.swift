@@ -1,13 +1,13 @@
 //
-//  CategoryView.swift
+//  LandmarkCategoryView.swift
 //  FavoritePlaces
 //
-//  Created by Tri Pham on 3/1/23.
+//  Created by Tri Pham on 3/7/23.
 //
 
 import SwiftUI
 
-struct CategoryView: View {
+struct LandmarkCategoryView: View {
     
     let categories = ["Groceries", "Pharmacies", "Gas", "Restaurants", "Coffee", "Hotel", "Mall"]
     let onSelectedCategory: (String) -> ()
@@ -22,7 +22,6 @@ struct CategoryView: View {
                     Button(
                         action: {
                             selectedCategory = category
-                            
                             onSelectedCategory(category)
                         },
                         label: {
@@ -42,8 +41,9 @@ struct CategoryView: View {
     }
 }
 
-struct CategoryView_Previews: PreviewProvider {
+struct LandmarkCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryView(onSelectedCategory: { _ in })
+        LandmarkCategoryView(onSelectedCategory: { _ in })
     }
 }
+

@@ -12,8 +12,8 @@ class LocationManager: NSObject, ObservableObject {
     
     private let locationManager = CLLocationManager()
     static let shared = LocationManager()
-    
     @Published var userLocation: CLLocationCoordinate2D?
+    @Published var location: CLLocation? = nil
     
     override init() {
         super.init()
@@ -22,7 +22,18 @@ class LocationManager: NSObject, ObservableObject {
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
     }
+    
+    func startUpdates() {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func stopUpdates() {
+        locationManager.stopUpdatingLocation()
+    }
+    
+
 }
 
 extension LocationManager: CLLocationManagerDelegate {
@@ -31,9 +42,13 @@ extension LocationManager: CLLocationManagerDelegate {
         guard let location = locations.first else { return }
         self.userLocation = location.coordinate
         locationManager.stopUpdatingLocation()
+        
+        guard let location = locations.last else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.location = location
+        }
     }
-    
-    
 }
-
-
