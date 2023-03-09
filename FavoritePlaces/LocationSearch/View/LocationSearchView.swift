@@ -10,7 +10,7 @@ import SwiftUI
 struct LocationSearchView: View {
     @State private var startLocationText = ""
     @EnvironmentObject var viewModel: HomeViewModel
-    @StateObject private var placeListVM = PlaceListViewModel()
+    @Binding var mapState: MapViewState
     
     var body: some View {
         VStack {
@@ -38,17 +38,6 @@ struct LocationSearchView: View {
                         .cornerRadius(20)
                         .disabled(true)
                     
-//                    TextField("Where to?", text: $viewModel.queryFragment,
-//                              onEditingChanged: { _ in},
-//                              onCommit: {
-//                                  placeListVM.searchLandmarks(searchTerm: viewModel.queryFragment)
-//                              })
-//                        .frame(height: 32)
-//                        .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
-//                        .background(Color(.systemGray4))
-//                        .cornerRadius(20)
-                    
-                    
                     TextField("Where to?", text: $viewModel.queryFragment)
                         .frame(height: 32)
                         .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
@@ -64,7 +53,7 @@ struct LocationSearchView: View {
                 .padding(.vertical)
             
             // list view
-            LocationSearchResultsView(viewModel: viewModel, config: .ride)
+            LocationSearchResultsView(viewModel: viewModel, mapState: $mapState, config: .picked)
         }
         .background(Color.theme.backgroundColor)
         .background(.white)
@@ -73,7 +62,7 @@ struct LocationSearchView: View {
 
 struct LocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchView()
+        LocationSearchView(mapState: .constant(.noInput))
             .environmentObject(HomeViewModel())
     }
 }

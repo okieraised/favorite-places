@@ -40,19 +40,18 @@ struct MapViewActionButton: View {
         case .sideMenu:
             showSideMenu.toggle()
             mapState = .noInput
-        case .categorySelected:
-            break
-        case .locationSelected, .polylineAdded:
+        case .locationSelected, .polylineAdded, .categorySelected:
             mapState = .noInput
             viewModel.selectedLocation = nil
+            viewModel.landmarks = []
         }
     }
     
     func imageNameForState(_ state: MapViewState) -> String {
         switch state {
-        case .noInput, .categorySelected:
+        case .noInput:
             return "line.3.horizontal"
-        case .searchingForLocation, .locationSelected, .polylineAdded, .sideMenu:
+        case .searchingForLocation, .locationSelected, .polylineAdded, .sideMenu, .categorySelected:
             return "arrow.left"
         }
     }

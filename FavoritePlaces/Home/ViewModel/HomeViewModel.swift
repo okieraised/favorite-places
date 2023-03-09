@@ -10,13 +10,14 @@ import Combine
 import MapKit
 
 enum LocationResultsViewConfig {
-    case ride
+    case picked
     case saveLocation(SavedLocationViewModel)
 }
 
 class HomeViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
+    
     @Published var results = [MKLocalSearchCompletion]()
     @Published var selectedLocation: Location?
     @Published var landmarks: [LandmarkViewModel] = []
@@ -98,7 +99,7 @@ extension HomeViewModel {
             let coordinate = item.placemark.coordinate
 
             switch config {
-            case .ride:
+            case .picked:
                 self.selectedLocation = Location(title: localSearch.title, coordinate: coordinate)
             case .saveLocation(let viewModel):
                 break
@@ -106,6 +107,10 @@ extension HomeViewModel {
         }
     }
     
+    func selectLocations(location: CLLocation, searchTerm: String) {
+        landmarkSearch(location: location, searchTerm: searchTerm)
+    }
+
     func locationSearch(forLocalSearchCompletion localSearch: MKLocalSearchCompletion,
                         completion: @escaping MKLocalSearch.CompletionHandler) {
         let searchRequest = MKLocalSearch.Request()
@@ -129,7 +134,6 @@ extension HomeViewModel {
             if let error = error {
                 print(error)
             } else if let response = response {
-                print(response)
                 let mapItems = response.mapItems
                 self.landmarks = mapItems.map {
                     return LandmarkViewModel(placemark: $0.placemark)

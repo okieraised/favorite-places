@@ -14,13 +14,6 @@ struct HomeView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     
-//    private func getRegion() -> Binding<MKCoordinateRegion> {
-//        guard let coordinate = placeListVM.currentLocation else {
-//            return .constant(MKCoordinateRegion.defaultRegion)
-//        }
-//        return .constant(MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)))
-//    }
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -48,7 +41,7 @@ extension HomeView {
                     .ignoresSafeArea()
                 
                 if mapState == .searchingForLocation {
-                    LocationSearchView()
+                    LocationSearchView(mapState: $mapState)
                 } else if mapState == .noInput {
                     VStack {
                         LocationSearchActivationView()
@@ -59,17 +52,18 @@ extension HomeView {
                                 }
                             }
                         
-                        LandmarkCategoryView { (category) in
-                            homeViewModel.landmarkSearch(location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847), searchTerm: category)
-
+                        LandmarkView(
+                            onSelectedCategory: { (category) in homeViewModel.landmarkSearch(
+                                location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),
+                                searchTerm: category)   
+                            },
+                            mapState: $mapState
+                        )
+                        .onTapGesture {
+                            mapState = .noInput
                         }
                     }
-                    
                 }
-                
-                
-                
-                
                 MapViewActionButton(mapState: $mapState, showSideMenu: $showSideMenu)
                     .padding(.leading, 10)
                     .padding(.bottom, 30)

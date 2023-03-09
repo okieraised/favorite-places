@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct LocationSearchResultsView: View {
     @StateObject var viewModel: HomeViewModel
+    @Binding var mapState: MapViewState
     let config: LocationResultsViewConfig
     
     var body: some View {
@@ -18,7 +20,15 @@ struct LocationSearchResultsView: View {
                     LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
                         .onTapGesture {
                             withAnimation(.spring()) {
-                                viewModel.selectLocation(result, config: config)
+                                if result.subtitle.contains("Tìm gần đây") {
+                                    mapState = .categorySelected
+                                    viewModel.selectLocations(
+                                        location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),
+                                        searchTerm: result.title
+                                    )
+                                } else {
+                                    viewModel.selectLocation(result, config: config)
+                                }
                             }
                         }
                 }

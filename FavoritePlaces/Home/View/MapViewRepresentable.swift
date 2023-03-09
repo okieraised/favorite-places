@@ -13,7 +13,6 @@ struct MapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
     @Binding var mapState: MapViewState
     @EnvironmentObject var homeViewModel: HomeViewModel
-    @StateObject private var placeListVM = PlaceListViewModel()
     
     func makeUIView(context: Context) -> some UIView {
         mapView.delegate = context.coordinator
@@ -25,25 +24,20 @@ struct MapViewRepresentable: UIViewRepresentable {
         return mapView
     }
     
-    func getRegion() -> Binding<MKCoordinateRegion> {
-        guard let coordinate = placeListVM.currentLocation else {
-            return .constant(MKCoordinateRegion.defaultRegion)
-        }
-        return .constant(MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)))
-    }
-    
     func updateUIView(_ uiView: UIViewType, context: Context) {
         switch mapState {
         case .noInput:
+//            context.coordinator.parent.homeViewModel.queryFragment = ""
             context.coordinator.clearMapViewAndRecenterOnUserLocation()
             break
         case .searchingForLocation:
             break
         case .categorySelected:
+            let landmarks = homeViewModel.landmarks
+            context.coordinator.addAndSelectAnnotations(withLandmarks: landmarks)
             break
         case .locationSelected:
             if let coordinate = homeViewModel.selectedLocation?.coordinate {
-                print("DEBUG: Adding stuff to map..")
                 context.coordinator.addAndSelectAnnotation(withCoordinate: coordinate)
                 context.coordinator.configurePolyline(withDestinationCoordinate: coordinate)
             }
@@ -96,24 +90,36 @@ extension MapViewRepresentable {
             return polyline
         }
         
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            
-//            if let annotation = annotation as? DriverAnnotation {
-//                let view = MKAnnotationView(annotation: annotation, reuseIdentifier: "driver")
-//                view.image = UIImage(named: "chevron-sign-to-right")
-//                return view
-//            }
-            
-            return nil
-        }
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+              print("calloutAccessoryControlTapped")
+           }
+
+       func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
+          print("didSelectAnnotationTapped")
+       }
+
         
         
         // MARK: - Helpers
+        
         func configurePolyineToPickupLocation(withRoute route: MKRoute) {
             self.parent.mapView.addOverlay(route.polyline)
             let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
                                                            edgePadding: .init(top: 88, left: 32, bottom: 360, right: 32))
             self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+        }
+        
+        func addAndSelectAnnotations(withLandmarks landmarks: [LandmarkViewModel]) {
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            
+            var annos = [MKPointAnnotation]()
+            
+            for landmark in landmarks {
+                let anno = MKPointAnnotation()
+                anno.coordinate = landmark.coordinate
+                annos.append(anno)
+            }
+            parent.mapView.addAnnotations(annos)
         }
         
         func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D) {
