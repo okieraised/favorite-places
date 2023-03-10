@@ -9,17 +9,18 @@ import SwiftUI
 import MapKit
 
 struct PlaceCalloutView: View {
-//    @State private var annotation: AnnotationViewModel
-//    @State private var selectShowDirections: (AnnotationViewModel) -> Void
+    var annotation: CustomAnnotation
     
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+//        Text(annotation.title ?? "")
+        Text(annotation.subtitle ?? "")
+        Text(annotation.phoneNumber ?? "")
     }
 }
 
-struct PlaceCalloutView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlaceCalloutView()
-    }
-}
+//struct PlaceCalloutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PlaceCalloutView()
+//    }
+//}

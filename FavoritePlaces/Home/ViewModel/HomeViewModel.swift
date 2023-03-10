@@ -136,7 +136,7 @@ extension HomeViewModel {
             } else if let response = response {
                 let mapItems = response.mapItems
                 self.landmarks = mapItems.map {
-                    return LandmarkViewModel(placemark: $0.placemark)
+                    return LandmarkViewModel(placemark: $0) //.placemark
                 }
             }
         }

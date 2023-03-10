@@ -12,33 +12,25 @@ import Contacts
 
 struct LandmarkViewModel: Identifiable {
 
-    let placemark: MKPlacemark
-//    let placemark: MKAnnotation
+    let placemark: MKMapItem
+//    let placemark: MKMapItem // MKPlacemark
     
     let id = UUID()
-    
-//    var title: String {
-//        (placemark.title ?? "") ?? ""
-//    }
-//
-//    var subtitle: String {
-//        (placemark.subtitle ?? "") ?? ""
-//    }
-//
-//    var description: String {
-//        placemark.description
-//    }
-//
-//    var coordinate: CLLocationCoordinate2D {
-//        placemark.coordinate
-//    }
 
     var name: String {
         placemark.name ?? ""
     }
 
     var title: String {
-        placemark.title ?? ""
+        placemark.placemark.title ?? ""
+    }
+    
+    var phoneNumber: String {
+        placemark.phoneNumber ?? ""
+    }
+    
+    var url: URL {
+        placemark.url ?? URL(string: "")!
     }
     
     var description: String {
@@ -46,19 +38,14 @@ struct LandmarkViewModel: Identifiable {
     }
     
     var location: CLLocation {
-        placemark.location ?? CLLocation(latitude: 0, longitude: 0)
+        placemark.placemark.location ?? CLLocation(latitude: 0, longitude: 0)
     }
     
     var countryCode: String {
-        placemark.countryCode ?? ""
+        placemark.placemark.countryCode ?? ""
     }
-    
-    
-    
-    
-
 
     var coordinate: CLLocationCoordinate2D {
-        placemark.coordinate
+        placemark.placemark.coordinate
     }
 }
