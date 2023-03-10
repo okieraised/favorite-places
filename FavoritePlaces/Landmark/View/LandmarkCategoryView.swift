@@ -1,5 +1,5 @@
 //
-//  LandmarkView.swift
+//  LandmarkCategoryView.swift
 //  FavoritePlaces
 //
 //  Created by Tri Pham on 3/7/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LandmarkView: View {
+struct LandmarkCategoryView: View {
     
     let categories = ["Coffee", "Gas", "Groceries", "Pharmacies", "Restaurants", "Hotel", "Mall"]
     let onSelectedCategory: (String) -> ()
@@ -44,7 +44,7 @@ struct LandmarkView: View {
 
 struct LandmarkCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        LandmarkView(onSelectedCategory: { _ in }, mapState: .constant(.categorySelected))
+        LandmarkCategoryView(onSelectedCategory: { _ in }, mapState: .constant(.categorySelected))
     }
 }
 

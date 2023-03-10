@@ -10,5 +10,5 @@ import CoreLocation
 struct SavedLocation: Codable {
     let title: String
     let address: String
-//    let Longitude: CLLocationCoordinate2D
+//    let coordinate: CLLocationCoordinate2D
 }

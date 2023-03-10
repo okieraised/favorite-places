@@ -19,6 +19,8 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.isRotateEnabled = false
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
+        mapView.showsCompass = true
+        mapView.showsScale = true
 //        mapView.mapType = .satellite
         
         return mapView
@@ -27,7 +29,6 @@ struct MapViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
         switch mapState {
         case .noInput:
-//            context.coordinator.parent.homeViewModel.queryFragment = ""
             context.coordinator.clearMapViewAndRecenterOnUserLocation()
             break
         case .searchingForLocation:
@@ -94,8 +95,69 @@ extension MapViewRepresentable {
               print("calloutAccessoryControlTapped")
            }
 
-       func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
-          print("didSelectAnnotationTapped")
+       func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+           print("didSelectAnnotationTapped")
+           guard let annotation = view.annotation as? AnnotationViewModel else {
+               return
+           }
+           
+           print("didSelectAnnotationTapped 2")
+           
+           
+           view.canShowCallout = true
+//           var mapAnnoView = MapAnnotation(coordinate: annotation.coordinate) {
+//               HStack {
+//                   Image(systemName: "mappin.circle.fill")
+//                       .font(.system(size: 12))
+//                       .foregroundColor(.red)
+//                   Text(annotation.address)
+//                       .minimumScaleFactor(0.1)
+//                       .font(.system(size: 12))
+//               }
+//               .padding(10)
+//               .background(.white.opacity(0.5))
+//               .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+//           }
+           
+//           var child = UIHostingController(rootView: PlaceCalloutView())
+//
+//           var parent = UIViewController()
+//           child.view.translatesAutoresizingMaskIntoConstraints = false
+//           child.view.frame = parent.view.bounds
+           
+           
+           
+//           view.detailCalloutAccessoryView = PlaceCalloutView(annotation: annotation, selectShowDirections: { [weak self] place in
+//
+//               let start = MKMapItem.forCurrentLocation()
+//               let destination = MKMapItem(placemark: MKPlacemark(coordinate: place.coordinate))
+//
+//               self?.calculateRoute(start: start, destination: destination) { route in
+//                   if let route = route {
+//
+//                       view.detailCalloutAccessoryView = nil
+//
+//                       let controller = RouteContentViewController(route: route)
+//                       let routePopover = RoutePopover(controller: controller)
+//
+//                       let positioningView = NSView(frame: NSRect(x: mapView.frame.width/2.6, y: 0, width: mapView.frame.width/2, height: 30.0))
+//
+//                       mapView.addSubview(positioningView)
+//
+//                       // clear all overlays
+//                       mapView.removeOverlays(mapView.overlays)
+//
+//                       // add overlay on the map
+//                       mapView.addOverlay(route.polyline, level: .aboveRoads)
+//
+//                       routePopover.show(relativeTo: positioningView.frame, of: positioningView, preferredEdge: .minY)
+//
+//                   }
+//               }
+//
+//           })
+           
+//           print("didSelectAnnotationTapped")
        }
 
         
@@ -116,9 +178,19 @@ extension MapViewRepresentable {
             
             for landmark in landmarks {
                 let anno = MKPointAnnotation()
+
+//                print("title", landmark.title)
+//                print("countryCode", landmark.countryCode)
+//                print("description", landmark.description)
+//                print("name", landmark.name)
+                
+                
+                anno.title = landmark.name
+                anno.subtitle = landmark.title
                 anno.coordinate = landmark.coordinate
                 annos.append(anno)
             }
+//            parent.mapView.
             parent.mapView.addAnnotations(annos)
         }
         

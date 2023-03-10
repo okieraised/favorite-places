@@ -52,7 +52,7 @@ extension HomeView {
                                 }
                             }
                         
-                        LandmarkView(
+                        LandmarkCategoryView(
                             onSelectedCategory: { (category) in homeViewModel.landmarkSearch(
                                 location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),
                                 searchTerm: category)   
@@ -78,6 +78,11 @@ extension HomeView {
         .onReceive(homeViewModel.$selectedLocation) { location in
             if location != nil {
                 self.mapState = .locationSelected
+            }
+        }
+        .onReceive(homeViewModel.$landmarks) { landmarks in
+            if landmarks.count > 0 {
+                self.mapState = .categorySelected
             }
         }
     }
