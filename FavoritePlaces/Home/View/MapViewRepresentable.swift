@@ -98,12 +98,16 @@ extension MapViewRepresentable {
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) { // MKAnnotationView
             view.displayPriority = MKFeatureDisplayPriority.required
             view.canShowCallout = true
-           
             guard let annotation = view.annotation as? CustomAnnotation else {
                 return
             }
             
+//            if let view = view as? MKMarkerAnnotationView {
+//                view.markerTintColor = UIColor.black
+//                }
+            
             let vc = UIHostingController(rootView: PlaceCalloutView(annotation: annotation))
+
             let detailView = vc.view!
             detailView.translatesAutoresizingMaskIntoConstraints = false
             parent.mapView.inputViewController?.addChild(vc)
