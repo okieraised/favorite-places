@@ -37,25 +37,11 @@ struct PlaceCalloutView: View {
             }
         }
         
+        
     }
 }
 
 struct PlaceCalloutView_Previews: PreviewProvider {
-    var anno: CustomAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
-
-    init(anno: CustomAnnotation) {
-        self.anno = anno
-        anno.phoneNumber = "123"
-    }
-//    anno.title = "haha"
-//    anno.subtitle = "123 main st"
-//    anno.name = "haha"
-//    anno.phoneNumber = "123456789"
-
     static var previews: some View {
-
-
-        PlaceCalloutView(
-            annotation: CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0)))
-    }
+        PlaceCalloutView(annotation: mockData.mockAnno)}
 }

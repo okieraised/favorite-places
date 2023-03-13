@@ -47,7 +47,7 @@ struct SideMenuView: View {
                     
                     Text("For my wonderful girlfriend,\nLuong Dao")
                         .multilineTextAlignment(.center)
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 14, weight: .semibold))
                         .accentColor(Color.theme.primaryTextColor)
                         .foregroundColor(Color.theme.primaryTextColor)
                     

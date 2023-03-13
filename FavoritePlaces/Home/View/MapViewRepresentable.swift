@@ -21,6 +21,8 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.userTrackingMode = .follow
         mapView.showsScale = true
         mapView.showsCompass = true
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
 //        mapView.mapType = .satellite
         
         return mapView
@@ -63,6 +65,7 @@ extension MapViewRepresentable {
         let parent: MapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
         var currentRegion: MKCoordinateRegion?
+        var directions: [String]?
         
         
         // MARK: - Lifecycle
@@ -95,26 +98,21 @@ extension MapViewRepresentable {
               print("calloutAccessoryControlTapped")
            }
         
-        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) { // MKAnnotationView
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             view.displayPriority = MKFeatureDisplayPriority.required
             view.canShowCallout = true
             guard let annotation = view.annotation as? CustomAnnotation else {
                 return
             }
             
-//            if let view = view as? MKMarkerAnnotationView {
-//                view.markerTintColor = UIColor.black
-//                }
-            
             let vc = UIHostingController(rootView: PlaceCalloutView(annotation: annotation))
-
             let detailView = vc.view!
             detailView.translatesAutoresizingMaskIntoConstraints = false
-            parent.mapView.inputViewController?.addChild(vc)
+            detailView.backgroundColor = view.backgroundColor
             
+            parent.mapView.inputViewController?.addChild(vc)
             parent.mapView.removeOverlays(parent.mapView.overlays)
             view.detailCalloutAccessoryView = detailView
-            
             configurePolyline(withDestinationCoordinate: annotation.coordinate)
        }
 
@@ -122,12 +120,12 @@ extension MapViewRepresentable {
         
         // MARK: - Helpers
         
-        func configurePolyineToPickupLocation(withRoute route: MKRoute) {
-            self.parent.mapView.addOverlay(route.polyline)
-            let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
-                                                           edgePadding: .init(top: 88, left: 32, bottom: 360, right: 32))
-            self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
-        }
+//        func configurePolyineToPickupLocation(withRoute route: MKRoute) {
+//            self.parent.mapView.addOverlay(route.polyline)
+//            let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
+//                                                           edgePadding: .init(top: 88, left: 32, bottom: 360, right: 32))
+//            self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+//        }
         
         func addAndSelectAnnotations(withLandmarks landmarks: [LandmarkViewModel]) {
             parent.mapView.removeAnnotations(parent.mapView.annotations)
@@ -155,7 +153,9 @@ extension MapViewRepresentable {
         }
         
         func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
-            guard let userLocationCoordinate = self.userLocationCoordinate else { return }
+            guard let userLocationCoordinate = self.userLocationCoordinate else {
+                return
+            }
 
             parent.homeViewModel.getDestinationRoute(from: userLocationCoordinate,
                                                          to: coordinate) { route in
@@ -164,6 +164,12 @@ extension MapViewRepresentable {
                 let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
                                                                edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+                self.directions = route.steps.map { $0.instructions }.filter { !$0.isEmpty }
+                
+                print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
+                print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
+                
+                
             }
         }
         
