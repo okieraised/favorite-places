@@ -12,27 +12,48 @@ struct LocationSearchResultCell: View {
     let subtitle: String
     
     var body: some View {
-        HStack {
-            Image(systemName: "mappin.circle.fill")
-                .resizable()
-                .foregroundColor(.blue)
-                .accentColor(.white)
-                .frame(width: 40, height: 40)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.body)
+        VStack {
+            HStack {
+                Image(systemName: "mappin.circle.fill")
+                    .resizable()
+                    .foregroundColor(.blue)
+                    .accentColor(.white)
+                    .frame(width: 40, height: 40)
                 
-                Text(subtitle)
-                    .font(.system(size: 15))
-                    .foregroundColor(.gray)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.body)
+                    
+                    Text(subtitle)
+                        .font(.system(size: 15))
+                        .foregroundColor(.gray)
+                }
+                .padding(.leading, 8)
+                .padding(.vertical, 8)
                 
-                Divider()
+                Spacer()
+                
+                Button {
+                    print("add to fav")
+                } label: {
+                    Text("Favorite")
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(.blue)
+                        .clipShape(Capsule())
+                        .frame(width: 120, height: 60)
+                }
+                
+                
+
             }
-            .padding(.leading, 8)
-            .padding(.vertical, 8)
+            .padding(.leading)
+            
+            Divider()
+                .padding(.leading)
+                .padding(.trailing)
         }
-        .padding(.leading)
+        
     }
 }
 

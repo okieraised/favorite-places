@@ -20,7 +20,7 @@ struct LocationSearchResultsView: View {
                     LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
                         .onTapGesture {
                             withAnimation(.spring()) {
-                                if result.subtitle.contains("Tìm gần đây") {
+                                if result.subtitle.lowercased().contains("tìm gần đây") || result.subtitle.lowercased().contains("search nearby")  {
                                     mapState = .categorySelected
                                     viewModel.selectLocations(
                                         location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),

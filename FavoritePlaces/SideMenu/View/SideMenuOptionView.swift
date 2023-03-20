@@ -22,11 +22,12 @@ struct SideMenuOptionView: View {
             Spacer()
         }
         .foregroundColor(Color.theme.primaryTextColor)
+//        .padding(.leading)
     }
 }
 
 struct SideMenuOptionView_Previews: PreviewProvider {
     static var previews: some View {
-        SideMenuOptionView(viewModel: .trips)
+        SideMenuOptionView(viewModel: .mapSetting)
     }
 }

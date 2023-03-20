@@ -8,14 +8,14 @@
 import Foundation
 
 enum SideMenuOptionViewModel: Int, CaseIterable, Identifiable {
-    case trips
+    case mapSetting
     case wallet
     case settings
     case messages
     
     var title: String {
         switch self {
-        case .trips: return "Your Trips"
+        case .mapSetting: return "Map Settings"
         case .wallet: return "Wallet"
         case .settings: return "Settings"
         case .messages: return "Messages"
@@ -24,7 +24,7 @@ enum SideMenuOptionViewModel: Int, CaseIterable, Identifiable {
     
     var imageName: String {
         switch self {
-        case .trips: return "list.bullet.rectangle"
+        case .mapSetting: return "map"
         case .wallet: return "creditcard"
         case .settings: return "gear"
         case .messages: return "bubble.left"

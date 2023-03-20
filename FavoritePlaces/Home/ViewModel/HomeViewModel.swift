@@ -42,7 +42,7 @@ class HomeViewModel: NSObject, ObservableObject {
     
     func viewForState(_ state: MapViewState) -> some View {
         switch state {
-        case .polylineAdded, .locationSelected:
+        case .polylineAdded, .locationSelected, .searchingForLocation:
             break
         default:
             break
@@ -136,7 +136,7 @@ extension HomeViewModel {
             } else if let response = response {
                 let mapItems = response.mapItems
                 self.landmarks = mapItems.map {
-                    return LandmarkViewModel(placemark: $0) //.placemark
+                    return LandmarkViewModel(placemark: $0)
                 }
             }
         }
@@ -162,25 +162,6 @@ extension HomeViewModel {
             completion(route)
         }
     }
-    
-//    func getDestinationRouteInstructions() {
-//        let request = MKDirections.Request()
-//            request.source = MKMapItem(placemark: p1)
-//            request.destination = MKMapItem(placemark: p2)
-//            request.transportType = .automobile
-//
-//            let directions = MKDirections(request: request)
-//            directions.calculate { response, error in
-//              guard let route = response?.routes.first else { return }
-//              mapView.addAnnotations([p1, p2])
-//              mapView.addOverlay(route.polyline)
-//              mapView.setVisibleMapRect(
-//                route.polyline.boundingMapRect,
-//                edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
-//                animated: true)
-//              self.directions = route.steps.map { $0.instructions }.filter { !$0.isEmpty }
-//            }
-//    }
 }
 
 // MARK: - MKLocalSearchCompleterDelegate

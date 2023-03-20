@@ -13,22 +13,34 @@ struct MapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
     @Binding var mapState: MapViewState
     @EnvironmentObject var homeViewModel: HomeViewModel
+    @EnvironmentObject var mapSettings: MapSettings
     
     func makeUIView(context: Context) -> some UIView {
         mapView.delegate = context.coordinator
-        mapView.isRotateEnabled = false
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.showsScale = true
         mapView.showsCompass = true
         mapView.isZoomEnabled = true
         mapView.isScrollEnabled = true
-//        mapView.mapType = .satellite
+        mapView.isRotateEnabled = true
+        
+        let scale = MKScaleView(mapView: mapView)
+        scale.scaleVisibility = .visible // always visible
+        scale.frame = CGRect(x: UIScreen.main.bounds.width -  100, y: 0, width: 100, height: UIScreen.main.bounds.height - UIScreen.main.bounds.height * 1/15)
+        mapView.addSubview(scale)
+        
+        let compass = MKCompassButton(mapView: mapView)
+        compass.compassVisibility = .visible
+        compass.frame.origin = CGPoint(x: UIScreen.main.bounds.width / 2 + 140, y: UIScreen.main.bounds.height / 2)
+        mapView.addSubview(compass)
         
         return mapView
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
+        updateMapType(uiView as! MKMapView)
+        
         switch mapState {
         case .noInput:
             context.coordinator.clearMapViewAndRecenterOnUserLocation()
@@ -51,6 +63,37 @@ struct MapViewRepresentable: UIViewRepresentable {
             break
         }
     }
+    
+    private func updateMapType(_ uiView: MKMapView) {
+        switch mapSettings.mapType {
+        case 0:
+            uiView.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: elevationStyle(), emphasisStyle: emphasisStyle())
+        case 1:
+            uiView.preferredConfiguration = MKHybridMapConfiguration(elevationStyle: elevationStyle())
+        case 2:
+            uiView.preferredConfiguration = MKImageryMapConfiguration(elevationStyle: elevationStyle())
+        default:
+            break
+        }
+    }
+        
+    private func elevationStyle() -> MKMapConfiguration.ElevationStyle {
+        if mapSettings.showElevation == 0 {
+            return MKMapConfiguration.ElevationStyle.realistic
+        } else {
+            return MKMapConfiguration.ElevationStyle.flat
+        }
+    }
+    
+    private func emphasisStyle() -> MKStandardMapConfiguration.EmphasisStyle {
+        if mapSettings.showEmphasisStyle == 0 {
+            return MKStandardMapConfiguration.EmphasisStyle.default
+        } else {
+            return MKStandardMapConfiguration.EmphasisStyle.muted
+        }
+    }
+    
+    
     
     func makeCoordinator() -> MapCoordinator {
         return MapCoordinator(parent: self)
@@ -85,6 +128,10 @@ extension MapViewRepresentable {
             )
             self.currentRegion = region
             parent.mapView.setRegion(region, animated: true)
+            
+//            let scale = MKScaleView(mapView: mapView)
+//            scale.scaleVisibility = .visible // always visible
+//            parent.mapView.addSubview(scale)
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -119,13 +166,6 @@ extension MapViewRepresentable {
         
         
         // MARK: - Helpers
-        
-//        func configurePolyineToPickupLocation(withRoute route: MKRoute) {
-//            self.parent.mapView.addOverlay(route.polyline)
-//            let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
-//                                                           edgePadding: .init(top: 88, left: 32, bottom: 360, right: 32))
-//            self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
-//        }
         
         func addAndSelectAnnotations(withLandmarks landmarks: [LandmarkViewModel]) {
             parent.mapView.removeAnnotations(parent.mapView.annotations)
@@ -181,6 +221,8 @@ extension MapViewRepresentable {
                 parent.mapView.setRegion(currentRegion, animated: true)
             }
         }
+        
+        
     }
 }
 

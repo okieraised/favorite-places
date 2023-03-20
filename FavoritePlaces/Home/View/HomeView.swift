@@ -10,8 +10,9 @@ import MapKit
 
 struct HomeView: View {
     @State private var mapState = MapViewState.noInput
-    @State private var showSideMenu = false
+    @State private var showSideMenu = false    
     @EnvironmentObject var homeViewModel: HomeViewModel
+    @EnvironmentObject var mapSettings: MapSettings
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     
     var body: some View {
@@ -39,6 +40,7 @@ extension HomeView {
             ZStack(alignment: .top) {
                 MapViewRepresentable(mapState: $mapState)
                     .ignoresSafeArea()
+                    .environmentObject(mapSettings)
                 
                 if mapState == .searchingForLocation {
                     LocationSearchView(mapState: $mapState)
@@ -92,5 +94,6 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
             .environmentObject(HomeViewModel())
+            .environmentObject(MapSettings())
     }
 }
