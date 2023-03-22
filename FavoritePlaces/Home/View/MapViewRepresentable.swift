@@ -11,9 +11,14 @@ import MapKit
 struct MapViewRepresentable: UIViewRepresentable {
     
     let mapView = MKMapView()
+    let configuration = MKStandardMapConfiguration()
     @Binding var mapState: MapViewState
     @EnvironmentObject var homeViewModel: HomeViewModel
     @EnvironmentObject var mapSettings: MapSettings
+    
+    private enum AnnotationReuseID: String {
+        case featureAnnotation
+    }
     
     func makeUIView(context: Context) -> some UIView {
         mapView.delegate = context.coordinator
@@ -24,6 +29,7 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.isZoomEnabled = true
         mapView.isScrollEnabled = true
         mapView.isRotateEnabled = true
+        mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures, .territories]
         
         let scale = MKScaleView(mapView: mapView)
         scale.scaleVisibility = .visible // always visible
@@ -34,6 +40,8 @@ struct MapViewRepresentable: UIViewRepresentable {
         compass.compassVisibility = .visible
         compass.frame.origin = CGPoint(x: UIScreen.main.bounds.width / 2 + 140, y: UIScreen.main.bounds.height / 2)
         mapView.addSubview(compass)
+        
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: AnnotationReuseID.featureAnnotation.rawValue)
         
         return mapView
     }
@@ -67,9 +75,13 @@ struct MapViewRepresentable: UIViewRepresentable {
     private func updateMapType(_ uiView: MKMapView) {
         switch mapSettings.mapType {
         case 0:
-            uiView.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: elevationStyle(), emphasisStyle: emphasisStyle())
+            let config = MKStandardMapConfiguration(elevationStyle: elevationStyle(), emphasisStyle: emphasisStyle())
+            config.showsTraffic = showTraffic()
+            uiView.preferredConfiguration = config
         case 1:
-            uiView.preferredConfiguration = MKHybridMapConfiguration(elevationStyle: elevationStyle())
+            let config = MKHybridMapConfiguration(elevationStyle: elevationStyle())
+            config.showsTraffic = showTraffic()
+            uiView.preferredConfiguration = config
         case 2:
             uiView.preferredConfiguration = MKImageryMapConfiguration(elevationStyle: elevationStyle())
         default:
@@ -93,7 +105,13 @@ struct MapViewRepresentable: UIViewRepresentable {
         }
     }
     
-    
+    private func showTraffic() -> Bool {
+        if mapSettings.showTraffic == 0 {
+            return false
+        } else {
+            return true
+        }
+    }
     
     func makeCoordinator() -> MapCoordinator {
         return MapCoordinator(parent: self)
@@ -102,13 +120,14 @@ struct MapViewRepresentable: UIViewRepresentable {
 
 extension MapViewRepresentable {
     
-    class MapCoordinator: NSObject, MKMapViewDelegate {
+    class MapCoordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         
         // MARK: - Properties
         let parent: MapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
         var currentRegion: MKCoordinateRegion?
         var directions: [String]?
+        var feature: CustomAnnotation?
         
         
         // MARK: - Lifecycle
@@ -117,8 +136,76 @@ extension MapViewRepresentable {
             super.init()
         }
         
-        
         // MARK: - MKMapViewDelegate
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            
+            guard let annotation = annotation as? MKMapFeatureAnnotation else {
+                return nil
+            }
+            
+            var anno = CustomAnnotation(coordinate: annotation.coordinate)
+                        
+            self.parent.homeViewModel.poiSearch(annotation: annotation, completion: { customAnnotation in
+                anno = customAnnotation
+                
+            })
+            
+            return setupPointOfInterestAnnotation(anno)
+            
+            
+            
+//            var annotationName: String?
+//            var annotationSubtitle: String?
+//            var annotationPhoneNumber: String?
+//            if let annotation = annotation as? MKMapFeatureAnnotation {
+//                let request = MKMapItemRequest(mapFeatureAnnotation: annotation)
+//                request.getMapItem { mapItem, error in
+//                    guard error == nil else {
+//                        print("\(error?.localizedDescription ?? "")")
+//                        return
+//                    }
+//
+//                    if let mapItem {
+//                        annotationName = mapItem.name ?? ""
+//                        annotationSubtitle = mapItem.placemark.title ?? ""
+//                        annotationPhoneNumber = mapItem.phoneNumber ?? ""
+//                    }
+//                }
+//                print("annotationName2", annotationName)
+//                let anno = CustomAnnotation(coordinate: annotation.coordinate)
+//                anno.name = annotationName
+//                anno.title = annotationName
+//                anno.subtitle = annotationSubtitle
+//                anno.phoneNumber = annotationPhoneNumber
+//
+//                print("anno", anno.name, anno.phoneNumber)
+//
+//                return setupPointOfInterestAnnotation(anno)
+//            } else {
+//                return nil
+//            }
+        }
+        
+        func setupPointOfInterestAnnotation(_ annotation: CustomAnnotation) -> MKAnnotationView? {
+            print(annotation.title, annotation.phoneNumber)
+            
+            let markerAnnotationView = parent.mapView.dequeueReusableAnnotationView(withIdentifier: AnnotationReuseID.featureAnnotation.rawValue,
+                                                                             for: annotation)
+            markerAnnotationView.displayPriority = MKFeatureDisplayPriority.required
+            markerAnnotationView.canShowCallout = true
+            
+            let vc = UIHostingController(rootView: PlaceCalloutView(annotation: annotation))
+            let detailView = vc.view!
+            detailView.translatesAutoresizingMaskIntoConstraints = false
+            detailView.backgroundColor = markerAnnotationView.backgroundColor
+            
+            parent.mapView.inputViewController?.addChild(vc)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            markerAnnotationView.detailCalloutAccessoryView = detailView
+//            configurePolyline(withDestinationCoordinate: annotation.coordinate)
+            return markerAnnotationView
+        }
+        
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             self.userLocationCoordinate = userLocation.coordinate
             let region = MKCoordinateRegion(
@@ -128,10 +215,6 @@ extension MapViewRepresentable {
             )
             self.currentRegion = region
             parent.mapView.setRegion(region, animated: true)
-            
-//            let scale = MKScaleView(mapView: mapView)
-//            scale.scaleVisibility = .visible // always visible
-//            parent.mapView.addSubview(scale)
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -162,8 +245,6 @@ extension MapViewRepresentable {
             view.detailCalloutAccessoryView = detailView
             configurePolyline(withDestinationCoordinate: annotation.coordinate)
        }
-
-        
         
         // MARK: - Helpers
         
@@ -208,8 +289,6 @@ extension MapViewRepresentable {
                 
                 print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
                 print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
-                
-                
             }
         }
         

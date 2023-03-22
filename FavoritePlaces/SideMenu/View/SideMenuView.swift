@@ -13,90 +13,76 @@ struct SideMenuView: View {
     var body: some View {
         VStack(spacing: 40) {
             VStack(alignment: .leading, spacing: 32) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Map Types")
-                                .font(.system(size: 16, weight: .semibold))
-                                .accentColor(Color.theme.primaryTextColor)
-                            .opacity(0.77)
-                            
-                            Image(systemName: "map")
-                                .imageScale(.small)
-                                .font(.title2)
-                                .foregroundColor(.gray)
-                        }
+                VStack(alignment: .leading, spacing: 15) {
+                    HStack {
+                        Image(systemName: "map")
+                            .imageScale(.small)
+                            .font(.title2)
+                            .foregroundColor(.blue)
                         
-                        Picker("Map Type", selection: $mapSettings.mapType) {
-                            Text("Standard").tag(0)
-                            Text("Hybrid").tag(1)
-                            Text("Image").tag(2)
-                        }.pickerStyle(SegmentedPickerStyle())
-                            .onChange(of: mapSettings.mapType) { newValue in
-                                mapSettings.mapType = newValue
-                            }.frame(width: 250)
+                        Text("Map Settings")
+                            .font(.system(size: 16, weight: .semibold))
+                            .accentColor(Color.theme.primaryTextColor)
+                        .opacity(0.77)
+                    }
+                    
+                    Picker("Map Type", selection: $mapSettings.mapType) {
+                        Text("Standard").tag(0)
+                        Text("Hybrid").tag(1)
+                        Text("Image").tag(2)
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: mapSettings.mapType) { newValue in
+                            mapSettings.mapType = newValue
+                        }.frame(width: 250)
 
-                        Picker("Map Elevation", selection: $mapSettings.showElevation) {
-                            Text("Realistic").tag(0)
-                            Text("Flat").tag(1)
-                        }.pickerStyle(SegmentedPickerStyle())
-                            .onChange(of: mapSettings.showElevation) { newValue in
-                                mapSettings.showElevation = newValue
-                            }.frame(width: 250)
+                    Picker("Map Elevation", selection: $mapSettings.showElevation) {
+                        Text("Realistic").tag(0)
+                        Text("Flat").tag(1)
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: mapSettings.showElevation) { newValue in
+                            mapSettings.showElevation = newValue
+                        }.frame(width: 250)
+                    
+                    Picker("Map Elevation", selection: $mapSettings.showEmphasisStyle) {
+                        Text("Default").tag(0)
+                        Text("Muted").tag(1)
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: mapSettings.showEmphasisStyle) { newValue in
+                            mapSettings.showEmphasisStyle = newValue
+                        }.frame(width: 250)
+                    
+                    Picker("Show Traffic", selection: $mapSettings.showTraffic) {
+                        Text("Traffic Off").tag(0)
+                        Text("Traffic On").tag(1)
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: mapSettings.showTraffic) { newValue in
+                            mapSettings.showTraffic = newValue
+                        }.frame(width: 250)
+                }
+                
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .imageScale(.small)
+                            .font(.title2)
+                            .foregroundColor(.yellow)
                         
-                        Picker("Map Elevation", selection: $mapSettings.showEmphasisStyle) {
-                            Text("Default").tag(0)
-                            Text("Muted").tag(1)
-                        }.pickerStyle(SegmentedPickerStyle())
-                            .onChange(of: mapSettings.showEmphasisStyle) { newValue in
-                                mapSettings.showEmphasisStyle = newValue
-                            }.frame(width: 250)
-                        }
-
-                
-                // option list
-//                    VStack {
-//                        ForEach(SideMenuOptionViewModel.allCases) { viewModel in
-//                            NavigationLink(value: viewModel) {
-//                                SideMenuOptionView(viewModel: viewModel)
-//                                    .padding()
-//                            }
-//                        }
-//                    }
-//                    .navigationDestination(for: SideMenuOptionViewModel.self) { viewModel in
-//                        switch viewModel {
-//                        case .mapSetting:
-//                            Text("Trips")
-//                        case .wallet:
-//                            Text("Wallet")
-//                        case .messages:
-//                            Text("Messages")
-//                        default:
-//                            Text("ahha")
-//                        }
-//                    }
-                
-//                    Section("Map Settings") {
-//                        ForEach(SavedLocationViewModel.allCases) { viewModel in
-//                            NavigationLink {
-//                            } label: {
-//                                SavedLocationRowView(viewModel: viewModel)
-//                            }
-//                        }
-//                    }
-//                    .font(.system(size: 24, weight: .bold))
-//                    .foregroundColor(Color.theme.primaryTextColor)
-                
-                Section("Favorites") {
+                        Text("Favorite Places")
+                            .font(.system(size: 16, weight: .semibold))
+                            .accentColor(Color.theme.primaryTextColor)
+                        .opacity(0.77)
+                    }
+                    
                     ForEach(SavedLocationViewModel.allCases) { viewModel in
                         NavigationLink {
                         } label: {
                             SavedLocationRowView(viewModel: viewModel)
                         }
                     }
+                    .padding(.trailing)
+                    .padding(.top, 1)
                 }
-                .font(.system(size: 24, weight: .bold))
-                .foregroundColor(Color.theme.primaryTextColor)
-                
                 
                 Rectangle()
                     .frame(width: 250, height: 0.75)
@@ -106,36 +92,14 @@ struct SideMenuView: View {
                 
                 Spacer()
                 
-                Text("For my wonderful girlfriend,\nLuong Dao")
+                Text("For the person I love the most, \n my girlfriend, Luong. \n You're the most beautiful, and\n most wonderful person I've ever met.")
                     .multilineTextAlignment(.center)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: 14, weight: .light))
                     .accentColor(Color.theme.primaryTextColor)
                     .foregroundColor(Color.theme.primaryTextColor)
-                
-                
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-//                .padding(.trailing)
             .padding(.leading, 16)
-                  
-            // option list
-            
-//                .navigationDestination(for: SideMenuOptionViewModel.self) { viewModel in
-//                    switch viewModel {
-//                    case .trips:
-//                        Text("Trips")
-//                    case .wallet:
-//                        Text("Wallet")
-//                    case .settings:
-//                        SettingsView(user: user)
-//                    case .messages:
-//                        Text("Messages")
-//                    }
-//                }
-            
-//                Spacer()
-
-            
         }
         .padding(.top, 24)
     }

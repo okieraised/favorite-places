@@ -6,15 +6,20 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum SavedLocationViewModel: Int, CaseIterable, Identifiable {
-case home
-case work
+    case home
+    case work
+    case shopping
+    case restaurant
     
     var title: String {
         switch self {
         case .home: return "Home"
         case .work: return "Work"
+        case .shopping: return "Shopping"
+        case .restaurant: return "Restaurant"
         }
     }
     
@@ -22,6 +27,8 @@ case work
         switch self {
         case .home: return "house.circle.fill"
         case .work: return "archivebox.circle.fill"
+        case .shopping: return "cart.circle.fill"
+        case .restaurant: return "fork.knife.circle.fill"
         }
     }
     
@@ -29,15 +36,27 @@ case work
         switch self {
         case .home: return "Add Home"
         case .work: return "Add Work"
+        case .shopping: return "Add Shopping"
+        case .restaurant: return "Add Restaurant"
         }
     }
     
-    var databaseKey: String {
+    var color: Color {
         switch self {
-        case .home: return "homeLocation"
-        case .work: return "workLocation"
+        case .home: return Color.blue
+        case .work: return Color.green
+        case .shopping: return Color.purple
+        case .restaurant: return Color.mint
         }
     }
+    
+//    var databaseKey: String {
+//        switch self {
+//        case .home: return "homeLocation"
+//        case .work: return "workLocation"
+//        case .shopping: return "shoppingLocation"
+//        }
+//    }
     
 //    func subtitle(forUser user: User) -> String {
 //        switch self {

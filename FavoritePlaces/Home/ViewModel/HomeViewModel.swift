@@ -58,24 +58,6 @@ class HomeViewModel: NSObject, ObservableObject {
 
 extension HomeViewModel {
     
-    func addressFromPlacemark(_ placemark: CLPlacemark) -> String {
-        var result = ""
-        
-        if let thoroughfare = placemark.thoroughfare {
-            result += thoroughfare
-        }
-        
-        if let subthoroughfare = placemark.subThoroughfare {
-            result += " \(subthoroughfare)"
-        }
-        
-        if let subadministrativeArea = placemark.subAdministrativeArea {
-            result += ", \(subadministrativeArea)"
-        }
-        
-        return result
-    }
-    
     func getPlacemark(forLocation location: CLLocation, completion: @escaping(CLPlacemark?, Error?) -> Void) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
             if let error = error {
@@ -119,6 +101,45 @@ extension HomeViewModel {
         
         search.start(completionHandler: completion)
     }
+    
+    func poiSearch(annotation: MKMapFeatureAnnotation, completion: @escaping (CustomAnnotation) -> ()) {
+        let request = MKMapItemRequest(mapFeatureAnnotation: annotation)
+        
+        request.getMapItem { mapItem, error in
+            if let error = error {
+                print("DEBUG: Feature location search failed with error \(error.localizedDescription)")
+                return
+            }
+
+            if let mapItem {
+                let anno = CustomAnnotation(coordinate: annotation.coordinate)
+                anno.name = mapItem.name ?? ""
+                anno.title = mapItem.name ?? ""
+                anno.subtitle = mapItem.placemark.title ?? ""
+                anno.phoneNumber = mapItem.phoneNumber ?? ""
+                completion(anno)
+            }
+        }
+    }
+    
+//    func poiSearch2(annotation: MKMapFeatureAnnotation) -> CustomAnnotation? {
+//        let request = MKMapItemRequest(mapFeatureAnnotation: annotation)
+//
+//        do {
+//            let mapItem = request.mapItem
+//
+//            let anno = CustomAnnotation(coordinate: annotation.coordinate)
+//            anno.name = mapItem.name ?? ""
+//            anno.title = mapItem.name ?? ""
+//            anno.subtitle = mapItem.placemark.title ?? ""
+//            anno.phoneNumber = mapItem.phoneNumber ?? ""
+//
+//            return anno
+//        } catch {
+//            print("oops")
+//        }
+//        return nil
+//    }
     
     func landmarkSearch(location: CLLocation, searchTerm: String) {
        

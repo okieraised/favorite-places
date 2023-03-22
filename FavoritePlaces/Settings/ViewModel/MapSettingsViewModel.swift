@@ -11,4 +11,5 @@ final class MapSettings: ObservableObject {
     @Published var mapType = 0
     @Published var showElevation = 0
     @Published var showEmphasisStyle = 0
+    @Published var showTraffic = 0
 }
