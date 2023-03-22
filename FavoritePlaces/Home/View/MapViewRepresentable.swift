@@ -127,13 +127,15 @@ extension MapViewRepresentable {
         var userLocationCoordinate: CLLocationCoordinate2D?
         var currentRegion: MKCoordinateRegion?
         var directions: [String]?
-        var feature: CustomAnnotation?
+        var feature: CustomAnnotation
         
         
         // MARK: - Lifecycle
         init(parent: MapViewRepresentable) {
             self.parent = parent
+            self.feature = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
             super.init()
+            
         }
         
         // MARK: - MKMapViewDelegate
@@ -143,66 +145,24 @@ extension MapViewRepresentable {
                 return nil
             }
             
-            var anno = CustomAnnotation(coordinate: annotation.coordinate)
-                        
-            self.parent.homeViewModel.poiSearch(annotation: annotation, completion: { customAnnotation in
-                anno = customAnnotation
-                
-            })
-            
-            return setupPointOfInterestAnnotation(anno)
-            
-            
-            
-//            var annotationName: String?
-//            var annotationSubtitle: String?
-//            var annotationPhoneNumber: String?
-//            if let annotation = annotation as? MKMapFeatureAnnotation {
-//                let request = MKMapItemRequest(mapFeatureAnnotation: annotation)
-//                request.getMapItem { mapItem, error in
-//                    guard error == nil else {
-//                        print("\(error?.localizedDescription ?? "")")
-//                        return
-//                    }
-//
-//                    if let mapItem {
-//                        annotationName = mapItem.name ?? ""
-//                        annotationSubtitle = mapItem.placemark.title ?? ""
-//                        annotationPhoneNumber = mapItem.phoneNumber ?? ""
-//                    }
-//                }
-//                print("annotationName2", annotationName)
-//                let anno = CustomAnnotation(coordinate: annotation.coordinate)
-//                anno.name = annotationName
-//                anno.title = annotationName
-//                anno.subtitle = annotationSubtitle
-//                anno.phoneNumber = annotationPhoneNumber
-//
-//                print("anno", anno.name, anno.phoneNumber)
-//
-//                return setupPointOfInterestAnnotation(anno)
-//            } else {
-//                return nil
-//            }
-        }
-        
-        func setupPointOfInterestAnnotation(_ annotation: CustomAnnotation) -> MKAnnotationView? {
-            print(annotation.title, annotation.phoneNumber)
-            
-            let markerAnnotationView = parent.mapView.dequeueReusableAnnotationView(withIdentifier: AnnotationReuseID.featureAnnotation.rawValue,
+            let markerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: AnnotationReuseID.featureAnnotation.rawValue,
                                                                              for: annotation)
-            markerAnnotationView.displayPriority = MKFeatureDisplayPriority.required
-            markerAnnotationView.canShowCallout = true
             
-            let vc = UIHostingController(rootView: PlaceCalloutView(annotation: annotation))
-            let detailView = vc.view!
-            detailView.translatesAutoresizingMaskIntoConstraints = false
-            detailView.backgroundColor = markerAnnotationView.backgroundColor
-            
-            parent.mapView.inputViewController?.addChild(vc)
-            parent.mapView.removeOverlays(parent.mapView.overlays)
-            markerAnnotationView.detailCalloutAccessoryView = detailView
-//            configurePolyline(withDestinationCoordinate: annotation.coordinate)
+            self.parent.homeViewModel.poiSearch(annotation: annotation, completion: { customAnnotation in
+                self.feature = customAnnotation
+                markerAnnotationView.displayPriority = MKFeatureDisplayPriority.required
+                markerAnnotationView.canShowCallout = true
+                
+                let vc = UIHostingController(rootView: PlaceCalloutView(annotation: self.feature))
+                let detailView = vc.view!
+                detailView.translatesAutoresizingMaskIntoConstraints = false
+                detailView.backgroundColor = markerAnnotationView.backgroundColor
+                
+                mapView.inputViewController?.addChild(vc)
+                mapView.removeOverlays(mapView.overlays)
+                markerAnnotationView.detailCalloutAccessoryView = detailView
+                self.configurePolyline(withDestinationCoordinate: annotation.coordinate)
+            })
             return markerAnnotationView
         }
         
@@ -234,12 +194,10 @@ extension MapViewRepresentable {
             guard let annotation = view.annotation as? CustomAnnotation else {
                 return
             }
-            
             let vc = UIHostingController(rootView: PlaceCalloutView(annotation: annotation))
             let detailView = vc.view!
             detailView.translatesAutoresizingMaskIntoConstraints = false
             detailView.backgroundColor = view.backgroundColor
-            
             parent.mapView.inputViewController?.addChild(vc)
             parent.mapView.removeOverlays(parent.mapView.overlays)
             view.detailCalloutAccessoryView = detailView
@@ -290,6 +248,10 @@ extension MapViewRepresentable {
                 print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
                 print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
             }
+        }
+        
+        func addStepView(withDirections directions: [String]) {
+            
         }
         
         func clearMapViewAndRecenterOnUserLocation() {

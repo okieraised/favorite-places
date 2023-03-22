@@ -104,7 +104,6 @@ extension HomeViewModel {
     
     func poiSearch(annotation: MKMapFeatureAnnotation, completion: @escaping (CustomAnnotation) -> ()) {
         let request = MKMapItemRequest(mapFeatureAnnotation: annotation)
-        
         request.getMapItem { mapItem, error in
             if let error = error {
                 print("DEBUG: Feature location search failed with error \(error.localizedDescription)")
@@ -121,25 +120,6 @@ extension HomeViewModel {
             }
         }
     }
-    
-//    func poiSearch2(annotation: MKMapFeatureAnnotation) -> CustomAnnotation? {
-//        let request = MKMapItemRequest(mapFeatureAnnotation: annotation)
-//
-//        do {
-//            let mapItem = request.mapItem
-//
-//            let anno = CustomAnnotation(coordinate: annotation.coordinate)
-//            anno.name = mapItem.name ?? ""
-//            anno.title = mapItem.name ?? ""
-//            anno.subtitle = mapItem.placemark.title ?? ""
-//            anno.phoneNumber = mapItem.phoneNumber ?? ""
-//
-//            return anno
-//        } catch {
-//            print("oops")
-//        }
-//        return nil
-//    }
     
     func landmarkSearch(location: CLLocation, searchTerm: String) {
        

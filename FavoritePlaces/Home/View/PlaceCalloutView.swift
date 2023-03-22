@@ -35,16 +35,6 @@ struct PlaceCalloutView: View {
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
             }
-            
-//            Button {
-//                print("touched")
-//            } label: {
-//                Text("Show\ndirections")
-//                    .font(.system(size: 12, weight: .semibold))
-//                    .foregroundColor(.white)
-//            }
-//            .padding()
-//            .background(Color.blue)
         }
     }
 }
