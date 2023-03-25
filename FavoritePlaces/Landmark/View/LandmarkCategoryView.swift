@@ -29,10 +29,10 @@ struct LandmarkCategoryView: View {
                             Text(category)
                         }
                     )
-                        .padding(10)
-                        .foregroundColor(selectedCategory == category ? Color.theme.primaryTextColor: Color.theme.secondaryBackgroundColor)
-                        .background(selectedCategory == category ? Color.gray: Color.accentColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .padding(10)
+                    .foregroundColor(selectedCategory == category ? Color.theme.primaryTextColor: Color.theme.secondaryBackgroundColor)
+                    .background(selectedCategory == category ? Color.gray: Color.accentColor)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 }
                 
             }

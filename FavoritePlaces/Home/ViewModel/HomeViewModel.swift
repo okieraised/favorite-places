@@ -23,6 +23,7 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var landmarks: [LandmarkViewModel] = []
     private let searchCompleter = MKLocalSearchCompleter()
     var userLocation: CLLocationCoordinate2D?
+    var directionSteps: [String]?
         
     var queryFragment: String = "" {
         didSet {
@@ -37,21 +38,6 @@ class HomeViewModel: NSObject, ObservableObject {
         searchCompleter.delegate = self
         searchCompleter.queryFragment = queryFragment
     }
-    
-    // MARK: - Helpers
-    
-    func viewForState(_ state: MapViewState) -> some View {
-        switch state {
-        case .polylineAdded, .locationSelected, .searchingForLocation:
-            break
-        default:
-            break
-        }
-
-        return AnyView(Text(""))
-    }
-    
-
 }
 
 // MARK: - Location Search Helpers
@@ -151,6 +137,20 @@ extension HomeViewModel {
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: userPlacemark)
         request.destination = MKMapItem(placemark: destPlacemark)
+        
+        let userLocation = CLLocation(latitude: userPlacemark.coordinate.latitude,
+                                      longitude: userPlacemark.coordinate.longitude)
+        let destination = CLLocation(latitude: destPlacemark.coordinate.latitude,
+                                     longitude: destPlacemark.coordinate.longitude)
+        
+        
+        let tripDistanceInMeters = userLocation.distance(from: destination)
+        if tripDistanceInMeters > 500 {
+            request.transportType = .walking
+        } else {
+            request.transportType = .automobile
+        }
+        
         let directions = MKDirections(request: request)
         
         directions.calculate { response, error in

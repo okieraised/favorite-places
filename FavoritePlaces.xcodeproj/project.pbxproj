@@ -36,9 +36,9 @@
 		E5B07E4229AF923F009E7193 /* MapViewActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E4129AF923F009E7193 /* MapViewActionButton.swift */; };
 		E5B07E4529AF935F009E7193 /* MapViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E4429AF935F009E7193 /* MapViewState.swift */; };
 		E5B07E4D29AF95AE009E7193 /* SavedLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E4C29AF95AE009E7193 /* SavedLocationViewModel.swift */; };
-		E5B07E5029AF95FE009E7193 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E4F29AF95FE009E7193 /* SettingView.swift */; };
 		E5B07E5329AF9655009E7193 /* SettingRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E5229AF9655009E7193 /* SettingRowView.swift */; };
 		E5B07E5529AF96A6009E7193 /* SavedLocationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E5429AF96A6009E7193 /* SavedLocationRowView.swift */; };
+		E5B156E129CF45FD003DB4BF /* LandmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B156E029CF45FD003DB4BF /* LandmarkButtonView.swift */; };
 		E5C275A729C20E1E0095FF20 /* MapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C275A629C20E1E0095FF20 /* MapSettingsViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,9 +73,9 @@
 		E5B07E4129AF923F009E7193 /* MapViewActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewActionButton.swift; sourceTree = "<group>"; };
 		E5B07E4429AF935F009E7193 /* MapViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewState.swift; sourceTree = "<group>"; };
 		E5B07E4C29AF95AE009E7193 /* SavedLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLocationViewModel.swift; sourceTree = "<group>"; };
-		E5B07E4F29AF95FE009E7193 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		E5B07E5229AF9655009E7193 /* SettingRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRowView.swift; sourceTree = "<group>"; };
 		E5B07E5429AF96A6009E7193 /* SavedLocationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLocationRowView.swift; sourceTree = "<group>"; };
+		E5B156E029CF45FD003DB4BF /* LandmarkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkButtonView.swift; sourceTree = "<group>"; };
 		E5C275A629C20E1E0095FF20 /* MapSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,46 +101,12 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		E5A66A7B29B629AF005A6A47 /* SideMenu */ = {
-			isa = PBXGroup;
-			children = (
-				E5A66A8F29B65DA8005A6A47 /* ViewModel */,
-				E5A66A7C29B629B7005A6A47 /* View */,
-			);
-			path = SideMenu;
-			sourceTree = "<group>";
-		};
-		E5A66A7C29B629B7005A6A47 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E5A66A7D29B629C4005A6A47 /* SideMenuView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		E5A66A8F29B65DA8005A6A47 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		E5A7B96F29BF58230031FA76 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
 				E5A7B97029BF58350031FA76 /* MockAnnotation.swift */,
 			);
 			path = Mock;
-			sourceTree = "<group>";
-		};
-		E5AA04AD29B5799B00980CCD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E5AA04AB29B5775900980CCD /* LocationSearchView.swift */,
-				E5A66A6A29B61FC5005A6A47 /* LocationSearchResultCell.swift */,
-				E5A66A6C29B6203D005A6A47 /* LocationSearchActivationView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		E5B07E1029AF8D60009E7193 = {
@@ -163,11 +129,9 @@
 			isa = PBXGroup;
 			children = (
 				E5A7B96F29BF58230031FA76 /* Mock */,
-				E5A66A7B29B629AF005A6A47 /* SideMenu */,
 				E5A66A7629B624D0005A6A47 /* Extension */,
 				E5B07E5129AF9641009E7193 /* Reuseable */,
 				E5B07E4A29AF957D009E7193 /* Settings */,
-				E5B07E4629AF94D5009E7193 /* LocationSearch */,
 				E5B07E4329AF9353009E7193 /* Models */,
 				E5B07E3729AF8F83009E7193 /* Managers */,
 				E5B07E3229AF8E98009E7193 /* Landmark */,
@@ -202,6 +166,9 @@
 		E5B07E3029AF8E5F009E7193 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E5AA04AB29B5775900980CCD /* LocationSearchView.swift */,
+				E5A66A6A29B61FC5005A6A47 /* LocationSearchResultCell.swift */,
+				E5A66A6C29B6203D005A6A47 /* LocationSearchActivationView.swift */,
 				E5B07E3D29AF9050009E7193 /* MapViewRepresentable.swift */,
 				E5B07E3F29AF90F7009E7193 /* HomeView.swift */,
 				E5B07E4129AF923F009E7193 /* MapViewActionButton.swift */,
@@ -262,22 +229,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E5B07E4629AF94D5009E7193 /* LocationSearch */ = {
-			isa = PBXGroup;
-			children = (
-				E5AA04AD29B5799B00980CCD /* View */,
-				E5B07E4729AF94E9009E7193 /* ViewModel */,
-			);
-			path = LocationSearch;
-			sourceTree = "<group>";
-		};
-		E5B07E4729AF94E9009E7193 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		E5B07E4A29AF957D009E7193 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,7 +250,7 @@
 		E5B07E4E29AF95EE009E7193 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E5B07E4F29AF95FE009E7193 /* SettingView.swift */,
+				E5A66A7D29B629C4005A6A47 /* SideMenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +261,7 @@
 				E5B07E5229AF9655009E7193 /* SettingRowView.swift */,
 				E5B07E5429AF96A6009E7193 /* SavedLocationRowView.swift */,
 				E5A66A7F29B630B7005A6A47 /* LocationSearchResultsView.swift */,
+				E5B156E029CF45FD003DB4BF /* LandmarkButtonView.swift */,
 			);
 			path = Reuseable;
 			sourceTree = "<group>";
@@ -388,6 +340,7 @@
 				E5B07E4D29AF95AE009E7193 /* SavedLocationViewModel.swift in Sources */,
 				E5B07E4029AF90F7009E7193 /* HomeView.swift in Sources */,
 				E59CEC1D29BB549B007C56E6 /* PlaceCalloutView.swift in Sources */,
+				E5B156E129CF45FD003DB4BF /* LandmarkButtonView.swift in Sources */,
 				E5B07E2629AF8D61009E7193 /* Persistence.swift in Sources */,
 				E5A852C129B78DC30040F454 /* LandmarkViewModel.swift in Sources */,
 				E5A66A7E29B629C4005A6A47 /* SideMenuView.swift in Sources */,
@@ -409,7 +362,6 @@
 				E5ADA0D729C9E39C00265C84 /* MKPointOfInterest.swift in Sources */,
 				E5A852C729B797830040F454 /* LandmarkCategoryView.swift in Sources */,
 				E5A66A6B29B61FC5005A6A47 /* LocationSearchResultCell.swift in Sources */,
-				E5B07E5029AF95FE009E7193 /* SettingView.swift in Sources */,
 				E5A30B9229CB614700DE81AA /* DirectionCalloutView.swift in Sources */,
 				E5A66A8029B630B7005A6A47 /* LocationSearchResultsView.swift in Sources */,
 				E5B07E5329AF9655009E7193 /* SettingRowView.swift in Sources */,

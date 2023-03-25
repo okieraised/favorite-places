@@ -232,6 +232,7 @@ extension MapViewRepresentable {
         }
         
         func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
+            self.parent.mapState = .locationSelected
             guard let userLocationCoordinate = self.userLocationCoordinate else {
                 return
             }
@@ -245,12 +246,14 @@ extension MapViewRepresentable {
                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
                 self.directions = route.steps.map { $0.instructions }.filter { !$0.isEmpty }
                 
+                self.parent.homeViewModel.directionSteps = self.directions
+                
                 print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
                 print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
             }
         }
         
-        func addStepView(withDirections directions: [String]) {
+        func addStepView(withDirections directions: [String]?) {
             
         }
         

@@ -10,7 +10,8 @@ import MapKit
 
 struct HomeView: View {
     @State private var mapState = MapViewState.noInput
-    @State private var showSideMenu = false    
+    @State private var showSideMenu = false
+    @State private var showDirections = false
     @EnvironmentObject var homeViewModel: HomeViewModel
     @EnvironmentObject var mapSettings: MapSettings
     @State private var userTrackingMode: MapUserTrackingMode = .follow
@@ -19,12 +20,35 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 if showSideMenu {
-                    SideMenuView()
+                    SideMenuView(mapState: $mapState, showSideMenu: $showSideMenu)
+                        .environmentObject(homeViewModel)
                 }
                 
                 mapView
                     .offset(x: showSideMenu ? 300 : 0)
                     .shadow(color: showSideMenu ? .black : .clear, radius: 10)
+            
+                VStack {
+                    Spacer()
+                    
+                    if mapState == .locationSelected || mapState == .polylineAdded {
+                        Button("Show Directions") {
+                            showDirections.toggle()
+                        }
+                        .padding(10)
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .sheet(isPresented: $showDirections) {
+                            DirectionCalloutView(route: homeViewModel.directionSteps ?? ["No Route Available"])
+                                .presentationDetents([.medium])
+                        }
+                        
+                    }
+                    
+                }
+                
+                
             }
             .onAppear {
                 showSideMenu = false
@@ -54,16 +78,16 @@ extension HomeView {
                                 }
                             }
                         
-                        LandmarkCategoryView(
-                            onSelectedCategory: { (category) in homeViewModel.landmarkSearch(
-                                location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),
-                                searchTerm: category)   
-                            },
-                            mapState: $mapState
-                        )
-                        .onTapGesture {
-                            mapState = .noInput
-                        }
+//                        LandmarkCategoryView(
+//                            onSelectedCategory: { (category) in homeViewModel.landmarkSearch(
+//                                location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),
+//                                searchTerm: category)   
+//                            },
+//                            mapState: $mapState
+//                        )
+//                        .onTapGesture {
+//                            mapState = .noInput
+//                        }
                     }
                 }
                 MapViewActionButton(mapState: $mapState, showSideMenu: $showSideMenu)
