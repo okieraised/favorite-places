@@ -169,7 +169,6 @@
 				E5AA04AB29B5775900980CCD /* LocationSearchView.swift */,
 				E5A66A6A29B61FC5005A6A47 /* LocationSearchResultCell.swift */,
 				E5A66A6C29B6203D005A6A47 /* LocationSearchActivationView.swift */,
-				E5B07E3D29AF9050009E7193 /* MapViewRepresentable.swift */,
 				E5B07E3F29AF90F7009E7193 /* HomeView.swift */,
 				E5B07E4129AF923F009E7193 /* MapViewActionButton.swift */,
 				E59CEC1C29BB549B007C56E6 /* PlaceCalloutView.swift */,
@@ -181,6 +180,7 @@
 		E5B07E3129AF8E64009E7193 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E5B07E3D29AF9050009E7193 /* MapViewRepresentable.swift */,
 				E5AA04AE29B57A4A00980CCD /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
@@ -493,7 +493,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"FavoritePlaces/Preview Content\"";
 				DEVELOPMENT_TEAM = CD5BA2AYRN;
 				ENABLE_PREVIEWS = YES;
@@ -510,7 +510,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thomaspham.favoriteplaces.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -528,7 +528,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"FavoritePlaces/Preview Content\"";
 				DEVELOPMENT_TEAM = CD5BA2AYRN;
 				ENABLE_PREVIEWS = YES;
@@ -545,7 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thomaspham.favoriteplaces.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

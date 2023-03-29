@@ -17,24 +17,51 @@ struct PlaceCalloutView: View {
                 .font(.system(size: 15))
                 .foregroundColor(Color.theme.primaryTextColor)
             
-            Button {
-                var phoneNumber = annotation.phoneNumber ?? ""
-                phoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "")
-                phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
-                phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
-                phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
+            HStack {
+                Button {
+                    var phoneNumber = annotation.phoneNumber ?? ""
+                    phoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "")
+                    phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+                    phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+                    phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
 
-                let tel = "tel://"
-                let formattedString = tel + phoneNumber
-                guard let url = URL(string: formattedString) else {
-                    return
+                    let tel = "tel://"
+                    let formattedString = tel + phoneNumber
+                    guard let url = URL(string: formattedString) else {
+                        return
+                    }
+                    UIApplication.shared.open(url)
+                } label: {
+                    Text(annotation.phoneNumber ?? "")
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
                 }
-                UIApplication.shared.open(url)
-            } label: {
-                Text(annotation.phoneNumber ?? "")
-                    .font(.system(size: 14))
-                    .foregroundColor(.gray)
+                
+                Spacer()
+                
+                Button {
+                    var googleSearch = annotation.title ?? ""
+                    googleSearch = googleSearch.folding(locale: NSLocale.current)
+                    let baseGoogleSearch = "https://www.google.com/search?q="
+                    var formattedString = baseGoogleSearch + googleSearch
+                    
+                    formattedString = formattedString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                    
+                    guard let url = URL(string: formattedString) else {
+                        return
+                    }
+                    UIApplication.shared.open(url)
+                    
+                } label: {
+                    Text("Search on Safari")
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                }
             }
+            
+            
+            
+
         }
     }
 }

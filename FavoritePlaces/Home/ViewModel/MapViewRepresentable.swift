@@ -30,16 +30,26 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.isScrollEnabled = true
         mapView.isRotateEnabled = true
         mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures, .territories]
+        mapView.isPitchEnabled = true
         
         let scale = MKScaleView(mapView: mapView)
-        scale.scaleVisibility = .visible // always visible
-        scale.frame = CGRect(x: UIScreen.main.bounds.width -  100, y: 0, width: 100, height: UIScreen.main.bounds.height - UIScreen.main.bounds.height * 1/15)
+        scale.scaleVisibility = .adaptive
+        scale.frame.origin = CGPoint(x: scale.frame.maxX + 80, y: scale.frame.maxY + 700)
         mapView.addSubview(scale)
-        
+    
         let compass = MKCompassButton(mapView: mapView)
-        compass.compassVisibility = .visible
-        compass.frame.origin = CGPoint(x: UIScreen.main.bounds.width / 2 + 140, y: UIScreen.main.bounds.height / 2)
+        compass.compassVisibility = .adaptive
+        compass.frame.origin = CGPoint(x: compass.frame.maxX + 290, y: compass.frame.maxY + 400)
         mapView.addSubview(compass)
+        
+//        let userTrackingButton = MKUserTrackingButton(mapView: mapView)
+//        userTrackingButton.frame.origin = CGPoint(x: userTrackingButton.frame.maxX + 300, y: userTrackingButton.frame.maxY + 470)
+//        userTrackingButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.8).cgColor
+//        userTrackingButton.layer.borderColor = UIColor.white.cgColor
+//        userTrackingButton.layer.borderWidth = 1
+//        userTrackingButton.layer.cornerRadius = 5
+//        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+//        mapView.addSubview(userTrackingButton)
         
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: AnnotationReuseID.featureAnnotation.rawValue)
         
@@ -134,6 +144,12 @@ extension MapViewRepresentable {
         init(parent: MapViewRepresentable) {
             self.parent = parent
             self.feature = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+            let region = MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: self.parent.mapView.userLocation.coordinate.latitude,
+                                               longitude: self.parent.mapView.userLocation.coordinate.longitude),
+                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            )
+            self.currentRegion = region
             super.init()
             
         }
@@ -174,7 +190,7 @@ extension MapViewRepresentable {
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             )
             self.currentRegion = region
-            parent.mapView.setRegion(region, animated: true)
+//            parent.mapView.setRegion(region, animated: true)
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -248,8 +264,8 @@ extension MapViewRepresentable {
                 
                 self.parent.homeViewModel.directionSteps = self.directions
                 
-                print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
-                print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
+//                print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
+//                print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
             }
         }
         

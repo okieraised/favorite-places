@@ -41,6 +41,8 @@ struct DirectionCalloutView: View {
             ScrollView(.vertical) {
                 VStack {
                     ForEach(route, id: \.self) { routeStep in
+                        
+                        
                         HStack(spacing: 16) {
                             Image(systemName: directionsIcon(routeStep))
                                 .imageScale(.medium)

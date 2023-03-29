@@ -32,19 +32,6 @@ struct LocationSearchResultCell: View {
                 .padding(.vertical, 8)
                 
                 Spacer()
-//
-//                Button {
-//                    print("add to fav")
-//                } label: {
-//                    Text("Favorite")
-//                        .padding()
-//                        .foregroundColor(.white)
-//                        .background(.blue)
-//                        .clipShape(Capsule())
-//                        .frame(width: 120, height: 60)
-//                }
-//
-                
 
             }
             .padding(.leading)
