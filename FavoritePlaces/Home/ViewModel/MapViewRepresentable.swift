@@ -41,16 +41,6 @@ struct MapViewRepresentable: UIViewRepresentable {
         compass.compassVisibility = .adaptive
         compass.frame.origin = CGPoint(x: compass.frame.maxX + 290, y: compass.frame.maxY + 400)
         mapView.addSubview(compass)
-        
-//        let userTrackingButton = MKUserTrackingButton(mapView: mapView)
-//        userTrackingButton.frame.origin = CGPoint(x: userTrackingButton.frame.maxX + 300, y: userTrackingButton.frame.maxY + 470)
-//        userTrackingButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.8).cgColor
-//        userTrackingButton.layer.borderColor = UIColor.white.cgColor
-//        userTrackingButton.layer.borderWidth = 1
-//        userTrackingButton.layer.cornerRadius = 5
-//        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-//        mapView.addSubview(userTrackingButton)
-        
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: AnnotationReuseID.featureAnnotation.rawValue)
         
         return mapView
@@ -58,7 +48,6 @@ struct MapViewRepresentable: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
         updateMapType(uiView as! MKMapView)
-        
         switch mapState {
         case .noInput:
             context.coordinator.clearMapViewAndRecenterOnUserLocation()
@@ -80,6 +69,7 @@ struct MapViewRepresentable: UIViewRepresentable {
         default:
             break
         }
+        self.mapView.addOverlays(homeViewModel.parseGeoJSON())
     }
     
     private func updateMapType(_ uiView: MKMapView) {
@@ -194,10 +184,52 @@ extension MapViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            let polyline = MKPolylineRenderer(overlay: overlay)
-            polyline.strokeColor = .systemBlue
-            polyline.lineWidth = 6
-            return polyline
+            
+//            switch overlay {
+//            case let overlay as MKCircle:
+//                return createCircleRenderer(for: overlay)
+//            case let overlay as MKGeodesicPolyline:
+//                return createGeodesicPolylineRenderer(for: overlay)
+//            case let overlay as MKPolyline where currentExample == .gradientPolyline:
+//                return createGradientPolylineRenderer(for: overlay)
+//            case let overlay as MKPolyline:
+//                return createPolylineRenderer(for: overlay)
+//            case let overlay as MKPolygon where currentExample == .blendModes:
+//                return createBlendModesPolygonRenderer(for: overlay)
+//            case let overlay as MKPolygon:
+//                return createPolygonRenderer(for: overlay)
+//            case let overlay as MKMultiPolygon:
+//                return createMultiPolylineRenderer(for: overlay)
+//            case let overlay as PeakGroundAccelerationGrid:
+//                return createCustomRenderer(for: overlay)
+//            case let overlay as MKTileOverlay:
+//                return createTileRenderer(for: overlay)
+//            default:
+//                return MKOverlayRenderer(overlay: overlay)
+//            }
+            
+            if let multiPolygon = overlay as? MKMultiPolygon {
+                let renderer = MKMultiPolygonRenderer(multiPolygon: multiPolygon)
+                renderer.fillColor = UIColor.red
+                renderer.strokeColor = UIColor.black
+                return renderer
+            }
+            
+            if overlay is MKPolyline {
+                let polyline = MKPolylineRenderer(overlay: overlay)
+                polyline.strokeColor = .systemBlue
+                polyline.lineWidth = 6
+                return polyline
+            }
+            
+            if overlay is MKPolygon {
+                let polyline = MKPolygonRenderer(overlay: overlay)
+                polyline.strokeColor = .systemBlue
+                polyline.lineWidth = 2
+                return polyline
+            }
+        
+            return MKOverlayRenderer(overlay: overlay)
         }
         
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -236,6 +268,13 @@ extension MapViewRepresentable {
                 annos.append(anno)
             }
             parent.mapView.addAnnotations(annos)
+            self.userLocationCoordinate = parent.mapView.userLocation.coordinate
+            let region = MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: parent.mapView.userLocation.coordinate.latitude,
+                                               longitude: parent.mapView.userLocation.coordinate.longitude),
+                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            )
+            self.currentRegion = region
         }
         
         func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D) {
@@ -263,8 +302,6 @@ extension MapViewRepresentable {
                 self.directions = route.steps.map { $0.instructions }.filter { !$0.isEmpty }
                 
                 self.parent.homeViewModel.directionSteps = self.directions
-                
-//                print(route.steps.map { $0.instructions }.filter { !$0.isEmpty })
 //                print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
             }
         }

@@ -44,6 +44,69 @@ class HomeViewModel: NSObject, ObservableObject {
 
 extension HomeViewModel {
     
+    func parseGeoJSON() -> [MKOverlay] {
+        guard let url = Bundle.main.url(forResource: "protected", withExtension: "json") else {
+            return []
+        }
+        
+        var geoJSON = [MKGeoJSONObject]()
+        
+        do {
+            let data = try Data(contentsOf: url)
+            geoJSON = try MKGeoJSONDecoder().decode(data)
+        } catch {
+            print("cannot decode geojson")
+        }
+        var overlays = [MKOverlay]()
+        for item in geoJSON {
+            if let feature = item as? MKGeoJSONFeature {
+                
+                let propData = feature.properties!
+                for geo in feature.geometry {
+                    if let polygon = geo as? MKMultiPolygon {
+                        overlays.append(polygon)
+                        let polygonInfo = try? JSONDecoder.init().decode(ProtectedAreaInfo.self, from: propData)
+                        
+                        print(polygonInfo)
+                    }
+                }
+                
+            }
+        }
+        return overlays
+    }
+    
+    
+    
+    func parseGeoJSON2() -> [MKOverlay] {
+        guard let url = Bundle.main.url(forResource: "soilmap", withExtension: "json") else {
+            return []
+        }
+        
+        var geoJSON = [MKGeoJSONObject]()
+        
+        do {
+            let data = try Data(contentsOf: url)
+            geoJSON = try MKGeoJSONDecoder().decode(data)
+        } catch {
+            print("cannot decode geojson")
+        }
+        var overlays = [MKOverlay]()
+        for item in geoJSON {
+            if let feature = item as? MKGeoJSONFeature {
+                for geo in feature.geometry {
+                    if let polygon = geo as? MKMultiPolygon {
+                        overlays.append(polygon)
+                    }
+                }
+//                for prop in feature.properties {
+//                    print(prop)
+//                }
+            }
+        }
+        return overlays
+    }
+    
     func getPlacemark(forLocation location: CLLocation, completion: @escaping(CLPlacemark?, Error?) -> Void) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
             if let error = error {
