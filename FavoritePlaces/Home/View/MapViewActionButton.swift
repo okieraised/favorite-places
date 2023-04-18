@@ -40,6 +40,8 @@ struct MapViewActionButton: View {
         case .sideMenu:
             showSideMenu.toggle()
             mapState = .noInput
+        case .featureSelected:
+            mapState = .noInput
         case .locationSelected, .polylineAdded, .categorySelected:
             mapState = .noInput
             viewModel.selectedLocation = nil
@@ -51,7 +53,7 @@ struct MapViewActionButton: View {
         switch state {
         case .noInput:
             return "line.3.horizontal"
-        case .searchingForLocation, .locationSelected, .polylineAdded, .sideMenu, .categorySelected:
+        case .searchingForLocation, .locationSelected, .polylineAdded, .sideMenu, .categorySelected, .featureSelected:
             return "arrow.left"
         }
     }

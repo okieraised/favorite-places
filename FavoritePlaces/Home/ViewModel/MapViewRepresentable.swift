@@ -32,16 +32,16 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures, .territories]
         mapView.isPitchEnabled = true
         
-        let scale = MKScaleView(mapView: mapView)
-        scale.scaleVisibility = .adaptive
-        scale.frame.origin = CGPoint(x: scale.frame.maxX + 80, y: scale.frame.maxY + 700)
-        mapView.addSubview(scale)
-    
-        let compass = MKCompassButton(mapView: mapView)
-        compass.compassVisibility = .adaptive
-        compass.frame.origin = CGPoint(x: compass.frame.maxX + 290, y: compass.frame.maxY + 400)
-        mapView.addSubview(compass)
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: AnnotationReuseID.featureAnnotation.rawValue)
+//        let scale = MKScaleView(mapView: mapView)
+//        scale.scaleVisibility = .adaptive
+//        scale.frame.origin = CGPoint(x: scale.frame.maxX + 80, y: scale.frame.maxY + 700)
+//        mapView.addSubview(scale)
+//
+//        let compass = MKCompassButton(mapView: mapView)
+//        compass.compassVisibility = .adaptive
+//        compass.frame.origin = CGPoint(x: compass.frame.maxX + 290, y: compass.frame.maxY + 400)
+//        mapView.addSubview(compass)
+//        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: AnnotationReuseID.featureAnnotation.rawValue)
         
         return mapView
     }
@@ -66,10 +66,14 @@ struct MapViewRepresentable: UIViewRepresentable {
             break
         case .polylineAdded:
             break
+        case .featureSelected:
+            if let view = uiView as? MKMapView {
+                view.addOverlays(homeViewModel.parseGeoJSON())
+            }
         default:
             break
         }
-//        self.mapView.addOverlays(homeViewModel.parseGeoJSON())
+        
     }
     
     private func updateMapType(_ uiView: MKMapView) {
@@ -207,7 +211,6 @@ extension MapViewRepresentable {
 //            default:
 //                return MKOverlayRenderer(overlay: overlay)
 //            }
-            
             if let multiPolygon = overlay as? MKMultiPolygon {
                 let renderer = MKMultiPolygonRenderer(multiPolygon: multiPolygon)
                 renderer.fillColor = UIColor.red
@@ -304,10 +307,6 @@ extension MapViewRepresentable {
                 self.parent.homeViewModel.directionSteps = self.directions
 //                print(route.distance, route.expectedTravelTime, route.advisoryNotices, route.hasHighways)
             }
-        }
-        
-        func addStepView(withDirections directions: [String]?) {
-            
         }
         
         func clearMapViewAndRecenterOnUserLocation() {

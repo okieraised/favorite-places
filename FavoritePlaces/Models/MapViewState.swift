@@ -11,7 +11,8 @@ enum MapViewState {
     case noInput
     case sideMenu
     case categorySelected
-    case searchingForLocation
     case locationSelected
+    case featureSelected
+    case searchingForLocation
     case polylineAdded
 }

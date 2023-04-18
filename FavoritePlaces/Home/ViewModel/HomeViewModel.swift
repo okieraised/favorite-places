@@ -66,7 +66,7 @@ extension HomeViewModel {
                     if let polygon = geo as? MKMultiPolygon {
                         overlays.append(polygon)
                         let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
-                        print(polygonInfo)
+//                        print(polygonInfo)
                     }
                 }
             }
@@ -76,7 +76,7 @@ extension HomeViewModel {
     
     
     func parseGeoJSON() -> [MKOverlay] {
-        guard let url = Bundle.main.url(forResource: "soilmap", withExtension: "json") else {
+        guard let url = Bundle.main.url(forResource: "soil", withExtension: "json") else {
             return []
         }
         

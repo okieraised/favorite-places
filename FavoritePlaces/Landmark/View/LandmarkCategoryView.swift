@@ -33,7 +33,7 @@ struct LandmarkCategoryView: View {
                     Button(
                         action: {
                             selectedCategory = category
-                            mapState = .categorySelected
+                            mapState = .featureSelected
                             onSelectedCategory(category)
                         },
                         label: {
