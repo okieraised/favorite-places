@@ -69,7 +69,7 @@ struct MapViewRepresentable: UIViewRepresentable {
         default:
             break
         }
-        self.mapView.addOverlays(homeViewModel.parseGeoJSON())
+//        self.mapView.addOverlays(homeViewModel.parseGeoJSON())
     }
     
     private func updateMapType(_ uiView: MKMapView) {

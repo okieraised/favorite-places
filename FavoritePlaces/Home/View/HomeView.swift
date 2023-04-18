@@ -78,16 +78,13 @@ extension HomeView {
                                 }
                             }
                         
-//                        LandmarkCategoryView(
-//                            onSelectedCategory: { (category) in homeViewModel.landmarkSearch(
-//                                location: LocationManager.shared.location ?? CLLocation(latitude: 21.030, longitude: 105.847),
-//                                searchTerm: category)   
-//                            },
-//                            mapState: $mapState
-//                        )
-//                        .onTapGesture {
-//                            mapState = .noInput
-//                        }
+                        LandmarkCategoryView(
+                            onSelectedCategory: { (category) in homeViewModel.handleGISFeature(feature: category) },
+                            mapState: $mapState
+                        )
+                        .onTapGesture {
+                            mapState = .noInput
+                        }
                     }
                 }
                 MapViewActionButton(mapState: $mapState, showSideMenu: $showSideMenu)

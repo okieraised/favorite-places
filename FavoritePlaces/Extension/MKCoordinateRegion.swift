@@ -11,7 +11,7 @@ import MapKit
 extension MKCoordinateRegion {
     static var defaultRegion: MKCoordinateRegion {
         return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 29.726819,longitude: -95.393692),
+            center: CLLocationCoordinate2D(latitude: 21.030,longitude: 105.847),
             span: MKCoordinateSpan(latitudeDelta: 0.1,longitudeDelta: 0.1))
     }
 }

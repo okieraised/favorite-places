@@ -31,3 +31,94 @@ struct ProtectedAreaOverlayer {
     var overlay: MKOverlay
     var polygonInfo: ProtectedAreaInfo
 }
+
+struct SoilTypeInfo: Codable {
+    let gid: Int
+    let domSoil, faoSoil, type: String
+    
+
+    enum CodingKeys: String, CodingKey {
+        case gid = "gid"
+        case domSoil = "domsoil"
+        case faoSoil = "faosoil"
+        case type = "Type"
+    }
+}
+
+struct SoilTypeOverlayer {
+    var overlay: MKOverlay
+    var polygonInfo: SoilTypeInfo
+}
+
+struct RiverInfo: Codable {
+    let name: String
+    let length: Float
+    let strahler: Int
+    
+
+    enum CodingKeys: String, CodingKey {
+        case name = "Name"
+        case length = "Length"
+        case strahler = "Strahler"
+    }
+}
+
+struct RiverOverlayer {
+    var overlay: MKOverlay
+    var polygonInfo: RiverInfo
+}
+
+struct TransportationInfo: Codable {
+    let name: String
+    let type: String
+    let length: Float
+    let level: String
+    
+
+    enum CodingKeys: String, CodingKey {
+        case name = "Name"
+        case type = "Type"
+        case length = "Length"
+        case level = "Level"
+    }
+}
+
+struct TransportationOverlayer {
+    var overlay: MKOverlay
+    var polygonInfo: TransportationInfo
+}
+
+struct HarborInfo: Codable {
+    let name: String
+    let type: String
+    
+
+    enum CodingKeys: String, CodingKey {
+        case name = "Name"
+        case type = "Type"
+    }
+}
+
+struct HarborOverlayer {
+    var overlay: MKOverlay
+    var polygonInfo: HarborInfo
+}
+
+struct HydropowerInfo: Codable {
+    let name: String
+    let wattage: Float
+    let operation: Int
+    
+
+    enum CodingKeys: String, CodingKey {
+        case name = "Vietnamese"
+        case wattage = "Wattage_PL"
+        case operation = "Year_of_op"
+    }
+}
+
+struct HydropowerOverlayer {
+    var overlay: MKOverlay
+    var polygonInfo: HydropowerInfo
+}
+

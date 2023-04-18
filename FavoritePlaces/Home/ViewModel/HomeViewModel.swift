@@ -44,8 +44,8 @@ class HomeViewModel: NSObject, ObservableObject {
 
 extension HomeViewModel {
     
-    func parseGeoJSON() -> [MKOverlay] {
-        guard let url = Bundle.main.url(forResource: "protected", withExtension: "json") else {
+    func handleGISFeature(feature: String)  -> [MKOverlay] {
+        guard let url = Bundle.main.url(forResource: "soil", withExtension: "json") else {
             return []
         }
         
@@ -65,20 +65,17 @@ extension HomeViewModel {
                 for geo in feature.geometry {
                     if let polygon = geo as? MKMultiPolygon {
                         overlays.append(polygon)
-                        let polygonInfo = try? JSONDecoder.init().decode(ProtectedAreaInfo.self, from: propData)
-                        
+                        let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
                         print(polygonInfo)
                     }
                 }
-                
             }
         }
         return overlays
     }
     
     
-    
-    func parseGeoJSON2() -> [MKOverlay] {
+    func parseGeoJSON() -> [MKOverlay] {
         guard let url = Bundle.main.url(forResource: "soilmap", withExtension: "json") else {
             return []
         }
@@ -94,14 +91,17 @@ extension HomeViewModel {
         var overlays = [MKOverlay]()
         for item in geoJSON {
             if let feature = item as? MKGeoJSONFeature {
+                
+                let propData = feature.properties!
                 for geo in feature.geometry {
                     if let polygon = geo as? MKMultiPolygon {
                         overlays.append(polygon)
+                        let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
+                        
+                        print(polygonInfo)
                     }
                 }
-//                for prop in feature.properties {
-//                    print(prop)
-//                }
+                
             }
         }
         return overlays
