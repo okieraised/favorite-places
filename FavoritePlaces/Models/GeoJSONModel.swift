@@ -32,6 +32,8 @@ struct ProtectedAreaOverlayer {
     var polygonInfo: ProtectedAreaInfo
 }
 
+//
+
 struct SoilTypeInfo: Codable {
     let gid: Int
     let domSoil, faoSoil, type: String
@@ -48,7 +50,38 @@ struct SoilTypeInfo: Codable {
 struct SoilTypeOverlayer {
     var overlay: MKOverlay
     var polygonInfo: SoilTypeInfo
+    var type: String
 }
+
+class SoilTypeOverlays {
+    private var overlayList = [SoilTypeOverlayer]()
+    static var shared = SoilTypeOverlays()
+    
+    func addOverlay(soilTypeOverlayer: SoilTypeOverlayer) {
+        SoilTypeOverlays.shared.overlayList.append(soilTypeOverlayer)
+    }
+    
+    func returnOverlayList() -> [SoilTypeOverlayer] {
+        return SoilTypeOverlays.shared.overlayList
+    }
+}
+
+class overlayer {
+    static var shared = overlayer(polygonInfo: SoilTypeInfo(gid: 1, domSoil: "Ao", faoSoil: "Ao90-2/3c", type: "Orthic Acrisols within 90cm, medium and fine textured, steeply dissected to mountainous"))
+    var polygonInfo : SoilTypeInfo
+    
+    init(polygonInfo: SoilTypeInfo){
+        self.polygonInfo = polygonInfo
+    }
+    
+    func changePolygon(newPolygon: SoilTypeInfo){
+        self.polygonInfo = newPolygon
+    }
+}
+
+
+
+//
 
 struct RiverInfo: Codable {
     let name: String

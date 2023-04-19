@@ -67,9 +67,10 @@ struct MapViewRepresentable: UIViewRepresentable {
         case .polylineAdded:
             break
         case .featureSelected:
-            if let view = uiView as? MKMapView {
-                view.addOverlays(homeViewModel.parseGeoJSON())
-            }
+            context.coordinator.addSoilTypeLayer()
+//            if let view = uiView as? MKMapView {
+//
+//            }
         default:
             break
         }
@@ -169,9 +170,13 @@ extension MapViewRepresentable {
                 detailView.backgroundColor = markerAnnotationView.backgroundColor
                 
                 mapView.inputViewController?.addChild(vc)
-                mapView.removeOverlays(mapView.overlays)
-                markerAnnotationView.detailCalloutAccessoryView = detailView
-                self.configurePolyline(withDestinationCoordinate: annotation.coordinate)
+                
+                if !customAnnotation.isGeoJSON {
+                    mapView.removeOverlays(mapView.overlays)
+                    markerAnnotationView.detailCalloutAccessoryView = detailView
+                    self.configurePolyline(withDestinationCoordinate: annotation.coordinate)
+                }
+                
             })
             return markerAnnotationView
         }
@@ -188,32 +193,118 @@ extension MapViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            
-//            switch overlay {
-//            case let overlay as MKCircle:
-//                return createCircleRenderer(for: overlay)
-//            case let overlay as MKGeodesicPolyline:
-//                return createGeodesicPolylineRenderer(for: overlay)
-//            case let overlay as MKPolyline where currentExample == .gradientPolyline:
-//                return createGradientPolylineRenderer(for: overlay)
-//            case let overlay as MKPolyline:
-//                return createPolylineRenderer(for: overlay)
-//            case let overlay as MKPolygon where currentExample == .blendModes:
-//                return createBlendModesPolygonRenderer(for: overlay)
-//            case let overlay as MKPolygon:
-//                return createPolygonRenderer(for: overlay)
-//            case let overlay as MKMultiPolygon:
-//                return createMultiPolylineRenderer(for: overlay)
-//            case let overlay as PeakGroundAccelerationGrid:
-//                return createCustomRenderer(for: overlay)
-//            case let overlay as MKTileOverlay:
-//                return createTileRenderer(for: overlay)
-//            default:
-//                return MKOverlayRenderer(overlay: overlay)
-//            }
             if let multiPolygon = overlay as? MKMultiPolygon {
                 let renderer = MKMultiPolygonRenderer(multiPolygon: multiPolygon)
-                renderer.fillColor = UIColor.red
+                
+                if overlayer.shared.polygonInfo.faoSoil == "Ao90-2/3c" {
+                    renderer.fillColor = UIColor(red: 222/255, green: 181/255, blue: 16/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Ao107-2bc" {
+                    renderer.fillColor = UIColor(red: 2/255, green: 250/255, blue: 91/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Je73-3a" {
+                    renderer.fillColor = UIColor(red: 2/255, green: 42/255, blue: 2/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Ge56-3a" {
+                    renderer.fillColor = UIColor(red: 16/255, green: 222/255, blue: 40/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Vp64-3a" {
+                    renderer.fillColor = UIColor(red: 2/255, green: 60/255, blue: 91/255, alpha: 0.8)
+                }
+
+                else if overlayer.shared.polygonInfo.faoSoil == "Gd29-3a" {
+                    renderer.fillColor = UIColor(red: 2/255, green: 90/255, blue: 88/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "I-Af-3c" {
+                    renderer.fillColor = UIColor(red: 120/255, green: 116/255, blue: 116/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Af60-1/2ab" {
+                    renderer.fillColor = UIColor(red: 78/255, green: 2/255, blue: 1/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Af61-1/2ab" {
+                    renderer.fillColor = UIColor(red: 78/255, green: 15/255, blue: 1/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Af63-3c" {
+                    renderer.fillColor = UIColor(red: 225/255, green: 66/255, blue: 250/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Ag17-1/2ab" {
+                    renderer.fillColor = UIColor(red: 200/255, green: 80/255, blue: 91/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Je72-2a" {
+                    renderer.fillColor = UIColor(red: 25/255, green: 230/255, blue: 226/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Ge55-3a" {
+                    renderer.fillColor = UIColor(red: 2/255, green: 255/255, blue: 2/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "I-Lc-Bk-c" {
+                    renderer.fillColor = UIColor(red: 211/255, green: 90/255, blue: 2/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Re83-1ab" {
+                    renderer.fillColor = UIColor(red: 211/255, green: 142/255, blue: 191/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Fr33-3ab" {
+                    renderer.fillColor = UIColor(red: 250/255, green: 97/255, blue: 2/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Fa14-3ab" {
+                    renderer.fillColor = UIColor(red: 70/255, green: 70/255, blue: 255/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Vp64-3a" {
+                    renderer.fillColor = UIColor(red: 2/255, green: 230/255, blue: 10/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Lc99-2b" {
+                    renderer.fillColor = UIColor(red: 78/255, green: 32/255, blue: 153/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Fo102-3ab" {
+                    renderer.fillColor = UIColor(red: 66/255, green: 24/255, blue: 190/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Ag16-2a" {
+                    renderer.fillColor = UIColor(red: 80/255, green: 80/255, blue: 250/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Jt13-3a" {
+                    renderer.fillColor = UIColor(red: 12/255, green: 65/255, blue: 5/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Jt14-3a" {
+                    renderer.fillColor = UIColor(red: 255/255, green: 0/255, blue: 50/255, alpha: 0.8)
+                }
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Od21-a" {
+                    renderer.fillColor = UIColor(red: 29/255, green: 9/255, blue: 9/255, alpha: 0.8)
+                }
+                
+                
+                else if overlayer.shared.polygonInfo.faoSoil == "Re83-1ab" {
+                    renderer.fillColor = UIColor(red: 199/255, green: 60/255, blue: 80/255, alpha: 0.8)
+                }
+                
+                else {
+                    renderer.fillColor = UIColor.red
+                }
+                
+                renderer.multiPolygon.title = overlayer.shared.polygonInfo.faoSoil
+                renderer.multiPolygon.subtitle = "\(overlayer.shared.polygonInfo.domSoil)"
+                
+                
                 renderer.strokeColor = UIColor.black
                 return renderer
             }
@@ -250,12 +341,71 @@ extension MapViewRepresentable {
             detailView.translatesAutoresizingMaskIntoConstraints = false
             detailView.backgroundColor = view.backgroundColor
             parent.mapView.inputViewController?.addChild(vc)
-            parent.mapView.removeOverlays(parent.mapView.overlays)
             view.detailCalloutAccessoryView = detailView
-            configurePolyline(withDestinationCoordinate: annotation.coordinate)
+            
+            if !annotation.isGeoJSON {
+                parent.mapView.removeOverlays(parent.mapView.overlays)
+                configurePolyline(withDestinationCoordinate: annotation.coordinate)
+            }
        }
         
         // MARK: - Helpers
+        func render(overlay: MKOverlay, info: Any?) {
+            let polygonInfo = info as! SoilTypeInfo
+            overlayer.shared.changePolygon(newPolygon: polygonInfo)
+            
+            let newMapOverlay = SoilTypeOverlayer(overlay: overlay, polygonInfo: overlayer.shared.polygonInfo, type: "soil")
+            SoilTypeOverlays.shared.addOverlay(soilTypeOverlayer: newMapOverlay)
+            parent.mapView.addOverlay(overlay)
+            let annot = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: overlay.coordinate.latitude, longitude: overlay.coordinate.longitude))
+            annot.name = polygonInfo.domSoil
+            annot.title = "Soil Type " + polygonInfo.faoSoil
+            annot.subtitle = polygonInfo.type
+            annot.isGeoJSON = true
+            parent.mapView.addAnnotation(annot)
+            
+            parent.mapView.setVisibleMapRect(overlay.boundingMapRect, animated: true)
+        }
+        
+        func loadGeoJson() {
+            guard let url = Bundle.main.url(forResource: "soil", withExtension: "json") else {
+                fatalError("unable to get geojson")
+            }
+            
+            var geoJson = [MKGeoJSONObject]()
+            var overlays = [MKOverlay]()
+            
+            do {
+                let data = try Data(contentsOf: url)
+                geoJson = try MKGeoJSONDecoder().decode(data)
+            } catch {
+                fatalError("Unable to decode JSON")
+            }
+
+            for item in geoJson {
+                if let feature = item as? MKGeoJSONFeature {
+                    let geometry = feature.geometry.first
+                    let propData = feature.properties!
+                    
+                    if let polygon = geometry as? MKMultiPolygon {
+                        let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
+                        self.render(overlay: polygon, info: polygonInfo)
+                    }
+                    
+                    for geo in feature.geometry {
+                        if let polygon = geo as? MKMultiPolygon {
+                            overlays.append(polygon)
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        
+        func addSoilTypeLayer() {
+            loadGeoJson()
+        }
         
         func addAndSelectAnnotations(withLandmarks landmarks: [LandmarkViewModel]) {
             parent.mapView.removeAnnotations(parent.mapView.annotations)

@@ -18,8 +18,10 @@ class CustomAnnotation: NSObject, MKAnnotation {
     var desc: String?
     var location: CLLocation?
     var countryCode: String?
+    var isGeoJSON: Bool
 
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
+        self.isGeoJSON = false
     }
 }
