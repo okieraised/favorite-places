@@ -467,8 +467,6 @@ extension MapViewRepresentable {
                 parent.mapView.setRegion(currentRegion, animated: true)
             }
         }
-        
-        
     }
 }
 

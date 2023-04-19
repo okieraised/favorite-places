@@ -79,7 +79,9 @@ extension HomeView {
                             }
                         
                         LandmarkCategoryView(
-                            onSelectedCategory: { (category) in homeViewModel.handleGISFeature(feature: category) },
+                            onSelectedCategory: { (category) in
+                                print(category)
+                            },
                             mapState: $mapState
                         )
                         .onTapGesture {

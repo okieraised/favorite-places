@@ -25,6 +25,7 @@ struct LandmarkCategoryView: View {
     
     @State private var selectedCategory: String = ""
     @Binding var mapState: MapViewState
+//    @Binding var featureState: GeoJSONFeature
     
     var body: some View {
         ScrollView(.horizontal) {
