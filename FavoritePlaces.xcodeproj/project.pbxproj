@@ -17,7 +17,6 @@
 		E5A66A8029B630B7005A6A47 /* LocationSearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A66A7F29B630B7005A6A47 /* LocationSearchResultsView.swift */; };
 		E5A66A8229B6314F005A6A47 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A66A8129B6314F005A6A47 /* Location.swift */; };
 		E5A7B97129BF58350031FA76 /* MockAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A7B97029BF58350031FA76 /* MockAnnotation.swift */; };
-		E5A8458C29E83A3A0008EF34 /* protected_area.json in Resources */ = {isa = PBXBuildFile; fileRef = E5A8458B29E83A3A0008EF34 /* protected_area.json */; };
 		E5A8459029E83C1C0008EF34 /* soil.json in Resources */ = {isa = PBXBuildFile; fileRef = E5A8458F29E83C1C0008EF34 /* soil.json */; };
 		E5A8459229E8409D0008EF34 /* GeoJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A8459129E8409D0008EF34 /* GeoJSONModel.swift */; };
 		E5A852C129B78DC30040F454 /* LandmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A852C029B78DC30040F454 /* LandmarkViewModel.swift */; };
@@ -26,6 +25,16 @@
 		E5AA04AC29B5775900980CCD /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA04AB29B5775900980CCD /* LocationSearchView.swift */; };
 		E5AA04AF29B57A4A00980CCD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA04AE29B57A4A00980CCD /* HomeViewModel.swift */; };
 		E5ADA0D729C9E39C00265C84 /* MKPointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADA0D629C9E39C00265C84 /* MKPointOfInterest.swift */; };
+		E5AFB11229F2AA5400FF06E5 /* SoilTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB11129F2AA5400FF06E5 /* SoilTypeModel.swift */; };
+		E5AFB11429F2AF8200FF06E5 /* FeatureViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB11329F2AF8200FF06E5 /* FeatureViewState.swift */; };
+		E5AFB11629F2C2D800FF06E5 /* ProtectedAreaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB11529F2C2D800FF06E5 /* ProtectedAreaModel.swift */; };
+		E5AFB11829F2CFB600FF06E5 /* protected_area.json in Resources */ = {isa = PBXBuildFile; fileRef = E5AFB11729F2CFB600FF06E5 /* protected_area.json */; };
+		E5AFB11A29F2D57700FF06E5 /* airport.json in Resources */ = {isa = PBXBuildFile; fileRef = E5AFB11929F2D57700FF06E5 /* airport.json */; };
+		E5AFB11C29F2D5CD00FF06E5 /* RiverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB11B29F2D5CD00FF06E5 /* RiverModel.swift */; };
+		E5AFB11E29F2D88B00FF06E5 /* TransportationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB11D29F2D88B00FF06E5 /* TransportationModel.swift */; };
+		E5AFB12029F2E70D00FF06E5 /* HarborModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB11F29F2E70D00FF06E5 /* HarborModel.swift */; };
+		E5AFB12229F2F25600FF06E5 /* AirportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB12129F2F25600FF06E5 /* AirportModel.swift */; };
+		E5AFB12429F2F5CD00FF06E5 /* HydropowerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AFB12329F2F5CD00FF06E5 /* HydropowerModel.swift */; };
 		E5B003EA29E04F1F00E430EF /* province.json in Resources */ = {isa = PBXBuildFile; fileRef = E5B003E929E04F1F00E430EF /* province.json */; };
 		E5B07E1D29AF8D60009E7193 /* FavoritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E1C29AF8D60009E7193 /* FavoritePlacesApp.swift */; };
 		E5B07E1F29AF8D60009E7193 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B07E1E29AF8D60009E7193 /* ContentView.swift */; };
@@ -60,7 +69,6 @@
 		E5A66A7F29B630B7005A6A47 /* LocationSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultsView.swift; sourceTree = "<group>"; };
 		E5A66A8129B6314F005A6A47 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		E5A7B97029BF58350031FA76 /* MockAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnnotation.swift; sourceTree = "<group>"; };
-		E5A8458B29E83A3A0008EF34 /* protected_area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = protected_area.json; sourceTree = "<group>"; };
 		E5A8458F29E83C1C0008EF34 /* soil.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = soil.json; sourceTree = "<group>"; };
 		E5A8459129E8409D0008EF34 /* GeoJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONModel.swift; sourceTree = "<group>"; };
 		E5A852C029B78DC30040F454 /* LandmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkViewModel.swift; sourceTree = "<group>"; };
@@ -69,6 +77,16 @@
 		E5AA04AB29B5775900980CCD /* LocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
 		E5AA04AE29B57A4A00980CCD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E5ADA0D629C9E39C00265C84 /* MKPointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKPointOfInterest.swift; sourceTree = "<group>"; };
+		E5AFB11129F2AA5400FF06E5 /* SoilTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoilTypeModel.swift; sourceTree = "<group>"; };
+		E5AFB11329F2AF8200FF06E5 /* FeatureViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewState.swift; sourceTree = "<group>"; };
+		E5AFB11529F2C2D800FF06E5 /* ProtectedAreaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectedAreaModel.swift; sourceTree = "<group>"; };
+		E5AFB11729F2CFB600FF06E5 /* protected_area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = protected_area.json; sourceTree = "<group>"; };
+		E5AFB11929F2D57700FF06E5 /* airport.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airport.json; sourceTree = "<group>"; };
+		E5AFB11B29F2D5CD00FF06E5 /* RiverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiverModel.swift; sourceTree = "<group>"; };
+		E5AFB11D29F2D88B00FF06E5 /* TransportationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportationModel.swift; sourceTree = "<group>"; };
+		E5AFB11F29F2E70D00FF06E5 /* HarborModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarborModel.swift; sourceTree = "<group>"; };
+		E5AFB12129F2F25600FF06E5 /* AirportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportModel.swift; sourceTree = "<group>"; };
+		E5AFB12329F2F5CD00FF06E5 /* HydropowerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HydropowerModel.swift; sourceTree = "<group>"; };
 		E5B003E929E04F1F00E430EF /* province.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = province.json; sourceTree = "<group>"; };
 		E5B07E1929AF8D60009E7193 /* FavoritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavoritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B07E1C29AF8D60009E7193 /* FavoritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesApp.swift; sourceTree = "<group>"; };
@@ -235,17 +253,26 @@
 		E5B07E4329AF9353009E7193 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E5B07E4429AF935F009E7193 /* MapViewState.swift */,
-				E5A66A8129B6314F005A6A47 /* Location.swift */,
 				E59CEC1E29BB7482007C56E6 /* Annotation.swift */,
-				E5A8458B29E83A3A0008EF34 /* protected_area.json */,
+				E5AFB11329F2AF8200FF06E5 /* FeatureViewState.swift */,
+				E5A8459129E8409D0008EF34 /* GeoJSONModel.swift */,
+				E5A66A8129B6314F005A6A47 /* Location.swift */,
+				E5B07E4429AF935F009E7193 /* MapViewState.swift */,
+				E5AFB11529F2C2D800FF06E5 /* ProtectedAreaModel.swift */,
+				E5AFB11129F2AA5400FF06E5 /* SoilTypeModel.swift */,
+				E5AFB11929F2D57700FF06E5 /* airport.json */,
 				E5A8458F29E83C1C0008EF34 /* soil.json */,
+				E5AFB11729F2CFB600FF06E5 /* protected_area.json */,
 				E5B4979429EED67A00C10E62 /* hydropower.json */,
 				E5B4979029EED35400C10E62 /* harbor.json */,
 				E5B4979229EED52A00C10E62 /* transportation.json */,
 				E5B003E929E04F1F00E430EF /* province.json */,
 				E5B4978E29EED13400C10E62 /* river.json */,
-				E5A8459129E8409D0008EF34 /* GeoJSONModel.swift */,
+				E5AFB11B29F2D5CD00FF06E5 /* RiverModel.swift */,
+				E5AFB11D29F2D88B00FF06E5 /* TransportationModel.swift */,
+				E5AFB11F29F2E70D00FF06E5 /* HarborModel.swift */,
+				E5AFB12129F2F25600FF06E5 /* AirportModel.swift */,
+				E5AFB12329F2F5CD00FF06E5 /* HydropowerModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -345,13 +372,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5AFB11829F2CFB600FF06E5 /* protected_area.json in Resources */,
+				E5AFB11A29F2D57700FF06E5 /* airport.json in Resources */,
 				E5A8459029E83C1C0008EF34 /* soil.json in Resources */,
 				E5B4979129EED35400C10E62 /* harbor.json in Resources */,
 				E5B4978F29EED13400C10E62 /* river.json in Resources */,
 				E5B07E2429AF8D61009E7193 /* Preview Assets.xcassets in Resources */,
 				E5B4979329EED52A00C10E62 /* transportation.json in Resources */,
 				E5B4979529EED67A00C10E62 /* hydropower.json in Resources */,
-				E5A8458C29E83A3A0008EF34 /* protected_area.json in Resources */,
 				E5B07E2129AF8D61009E7193 /* Assets.xcassets in Resources */,
 				E5B003EA29E04F1F00E430EF /* province.json in Resources */,
 			);
@@ -365,6 +393,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5AA04AF29B57A4A00980CCD /* HomeViewModel.swift in Sources */,
+				E5AFB11629F2C2D800FF06E5 /* ProtectedAreaModel.swift in Sources */,
+				E5AFB11C29F2D5CD00FF06E5 /* RiverModel.swift in Sources */,
 				E5B07E4D29AF95AE009E7193 /* SavedLocationViewModel.swift in Sources */,
 				E5B07E4029AF90F7009E7193 /* HomeView.swift in Sources */,
 				E59CEC1D29BB549B007C56E6 /* PlaceCalloutView.swift in Sources */,
@@ -373,8 +403,11 @@
 				E5A852C129B78DC30040F454 /* LandmarkViewModel.swift in Sources */,
 				E5A66A7E29B629C4005A6A47 /* SideMenuView.swift in Sources */,
 				E5B07E1F29AF8D60009E7193 /* ContentView.swift in Sources */,
+				E5AFB12429F2F5CD00FF06E5 /* HydropowerModel.swift in Sources */,
+				E5AFB12229F2F25600FF06E5 /* AirportModel.swift in Sources */,
 				E5AA04AC29B5775900980CCD /* LocationSearchView.swift in Sources */,
 				E5B07E5529AF96A6009E7193 /* SavedLocationRowView.swift in Sources */,
+				E5AFB12029F2E70D00FF06E5 /* HarborModel.swift in Sources */,
 				E5B07E4229AF923F009E7193 /* MapViewActionButton.swift in Sources */,
 				E5A66A8229B6314F005A6A47 /* Location.swift in Sources */,
 				E59CEC1F29BB7482007C56E6 /* Annotation.swift in Sources */,
@@ -387,13 +420,16 @@
 				E5B07E1D29AF8D60009E7193 /* FavoritePlacesApp.swift in Sources */,
 				E5A66A7829B624DA005A6A47 /* Color.swift in Sources */,
 				E5B07E2929AF8D61009E7193 /* FavoritePlaces.xcdatamodeld in Sources */,
+				E5AFB11E29F2D88B00FF06E5 /* TransportationModel.swift in Sources */,
 				E5ADA0D729C9E39C00265C84 /* MKPointOfInterest.swift in Sources */,
+				E5AFB11229F2AA5400FF06E5 /* SoilTypeModel.swift in Sources */,
 				E5A852C729B797830040F454 /* LandmarkCategoryView.swift in Sources */,
 				E5A66A6B29B61FC5005A6A47 /* LocationSearchResultCell.swift in Sources */,
 				E5A30B9229CB614700DE81AA /* DirectionCalloutView.swift in Sources */,
 				E5A66A8029B630B7005A6A47 /* LocationSearchResultsView.swift in Sources */,
 				E5B07E5329AF9655009E7193 /* SettingRowView.swift in Sources */,
 				E5A66A6D29B6203D005A6A47 /* LocationSearchActivationView.swift in Sources */,
+				E5AFB11429F2AF8200FF06E5 /* FeatureViewState.swift in Sources */,
 				E5A852C529B794C70040F454 /* MKCoordinateRegion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

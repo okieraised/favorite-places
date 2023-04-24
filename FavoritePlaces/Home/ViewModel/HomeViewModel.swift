@@ -32,7 +32,6 @@ class HomeViewModel: NSObject, ObservableObject {
     }
     
     // MARK: - Lifecycle
-    
     override init() {
         super.init()
         searchCompleter.delegate = self
@@ -41,103 +40,7 @@ class HomeViewModel: NSObject, ObservableObject {
 }
 
 // MARK: - Location Search Helpers
-
 extension HomeViewModel {
-    
-    func handleGISFeature(feature: String)  -> [MKOverlay] {
-        guard let url = Bundle.main.url(forResource: "soil", withExtension: "json") else {
-            return []
-        }
-        
-        var geoJSON = [MKGeoJSONObject]()
-        
-        do {
-            let data = try Data(contentsOf: url)
-            geoJSON = try MKGeoJSONDecoder().decode(data)
-        } catch {
-            print("cannot decode geojson")
-        }
-        var overlays = [MKOverlay]()
-        for item in geoJSON {
-            if let feature = item as? MKGeoJSONFeature {
-                
-                let propData = feature.properties!
-                for geo in feature.geometry {
-                    if let polygon = geo as? MKMultiPolygon {
-                        overlays.append(polygon)
-                        let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
-//                        print(polygonInfo)
-                    }
-                }
-            }
-        }
-        return overlays
-    }
-    
-//    func parseGeoJSON() -> [SoilTypeOverlayer] {
-//        guard let url = Bundle.main.url(forResource: "soil", withExtension: "json") else {
-//            return []
-//        }
-//
-//        var geoJSON = [MKGeoJSONObject]()
-//
-//        do {
-//            let data = try Data(contentsOf: url)
-//            geoJSON = try MKGeoJSONDecoder().decode(data)
-//        } catch {
-//            print("cannot decode geojson")
-//        }
-//        var overlays = [SoilTypeOverlayer]()
-//        for item in geoJSON {
-//            if let feature = item as? MKGeoJSONFeature {
-//                let propData = feature.properties!
-//                for geo in feature.geometry {
-//                    if let polygon = geo as? MKMultiPolygon {
-////                        overlays.append(polygon)
-//                        let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
-//
-//                        let soilInfo = SoilTypeOverlayer(overlay: polygon, polygonInfo: polygonInfo!, type: "soil")
-//                        overlays.append(soilInfo)
-////                        print(polygonInfo)
-//                    }
-//                }
-//
-//            }
-//        }
-//        return overlays
-//    }
-    
-    
-//    func parseGeoJSON() -> [MKOverlay] {
-//        guard let url = Bundle.main.url(forResource: "soil", withExtension: "json") else {
-//            return []
-//        }
-//
-//        var geoJSON = [MKGeoJSONObject]()
-//
-//        do {
-//            let data = try Data(contentsOf: url)
-//            geoJSON = try MKGeoJSONDecoder().decode(data)
-//        } catch {
-//            print("cannot decode geojson")
-//        }
-//        var overlays = [MKOverlay]()
-//        for item in geoJSON {
-//            if let feature = item as? MKGeoJSONFeature {
-//                let propData = feature.properties!
-//                for geo in feature.geometry {
-//                    if let polygon = geo as? MKMultiPolygon {
-//                        overlays.append(polygon)
-//
-//                        let polygonInfo = try? JSONDecoder.init().decode(SoilTypeInfo.self, from: propData)
-//                        print(polygonInfo)
-//                    }
-//                }
-//
-//            }
-//        }
-//        return overlays
-//    }
     
     func getPlacemark(forLocation location: CLLocation, completion: @escaping(CLPlacemark?, Error?) -> Void) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in

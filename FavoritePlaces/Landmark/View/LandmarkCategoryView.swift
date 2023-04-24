@@ -7,25 +7,24 @@
 
 import SwiftUI
 
-enum GeoJSONFeature: String {
-    case ProtectedArea = "protected_area"
-    case SoilType = "soil"
-    case HydropowerPlant = "hydropower"
-    case Harbor = "harbor"
-    case Transportation = "transportation"
-    case River = "river"
-    case Province = "province"
-}
+let AIRPORT = "Airport"
+//let PROVINCE = "Province"
+let HYDROPOWER_PLANT = "Hydropower Plant"
+let HARBOR = "Harbor"
+let TRANSPORTATION = "Road"
+let PROTECTED_AREA = "Protected Area"
+let SOIL_TYPE = "Soil Type"
+//let RIVER = "River"
                         
 
 struct LandmarkCategoryView: View {
     
-    let categories = ["Province", "Hydropower Plant", "Harbor", "Transportation", "Protected Area", "Soil Type", "River"]
+    let categories = [AIRPORT, HYDROPOWER_PLANT, HARBOR, TRANSPORTATION, PROTECTED_AREA, SOIL_TYPE]
     let onSelectedCategory: (String) -> ()
     
     @State private var selectedCategory: String = ""
     @Binding var mapState: MapViewState
-//    @Binding var featureState: GeoJSONFeature
+    @Binding var featureState: FeatureViewState
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -36,6 +35,26 @@ struct LandmarkCategoryView: View {
                             selectedCategory = category
                             mapState = .featureSelected
                             onSelectedCategory(category)
+                            switch selectedCategory {
+//                            case PROVINCE:
+//                                featureState = .province
+                            case AIRPORT:
+                                featureState = .airport
+                            case HYDROPOWER_PLANT:
+                                featureState = .hydropowerPlant
+                            case HARBOR:
+                                featureState = .harbor
+                            case TRANSPORTATION:
+                                featureState = .transportation
+                            case PROTECTED_AREA:
+                                featureState = .protectedArea
+                            case SOIL_TYPE:
+                                featureState = .soilType
+//                            case RIVER:
+//                                featureState = .river
+                            default:
+                                featureState = .noFeature
+                            }
                         },
                         label: {
                             Text(category)
@@ -56,7 +75,7 @@ struct LandmarkCategoryView: View {
 
 struct LandmarkCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        LandmarkCategoryView(onSelectedCategory: { _ in }, mapState: .constant(.categorySelected))
+        LandmarkCategoryView(onSelectedCategory: { _ in }, mapState: .constant(.categorySelected), featureState: .constant(.noFeature))
     }
 }
 

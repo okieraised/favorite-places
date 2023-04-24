@@ -10,6 +10,7 @@ import MapKit
 
 struct HomeView: View {
     @State private var mapState = MapViewState.noInput
+    @State private var featureState = FeatureViewState.noFeature
     @State private var showSideMenu = false
     @State private var showDirections = false
     @EnvironmentObject var homeViewModel: HomeViewModel
@@ -43,12 +44,8 @@ struct HomeView: View {
                             DirectionCalloutView(route: homeViewModel.directionSteps ?? ["No Route Available"])
                                 .presentationDetents([.medium])
                         }
-                        
                     }
-                    
                 }
-                
-                
             }
             .onAppear {
                 showSideMenu = false
@@ -62,7 +59,7 @@ extension HomeView {
     var mapView: some View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .top) {
-                MapViewRepresentable(mapState: $mapState)
+                MapViewRepresentable(mapState: $mapState, featureState: $featureState)
                     .ignoresSafeArea()
                     .environmentObject(mapSettings)
                 
@@ -82,7 +79,8 @@ extension HomeView {
                             onSelectedCategory: { (category) in
                                 print(category)
                             },
-                            mapState: $mapState
+                            mapState: $mapState,
+                            featureState: $featureState
                         )
                         .onTapGesture {
                             mapState = .noInput
